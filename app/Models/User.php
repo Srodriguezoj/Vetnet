@@ -13,6 +13,10 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
 
+    public const ROLE_ADMIN = 'Admin';
+    public const ROLE_VET = 'Veterinario';
+    public const ROLE_CLIENT = 'Cliente';
+
     /**
      * The attributes that are mass assignable.
      *

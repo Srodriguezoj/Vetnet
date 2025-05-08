@@ -13,7 +13,14 @@ Route::post('/login', [AuthController::class, 'login']);
 
 //Rutas protegidas por Sanctum (usuarios logueados)
 Route::middleware(['auth:sanctum'])->group(function(){
+
     Route::get('/logout', [AuthController::class, 'logout']);
+
+    //ejm de ruta por roles:
+    // Route::middleware(['auth:sanctum', 'role:admin'])->get('/admin-area', function () {
+    //    return response()->json(['message' => 'Bienvenida zona admin']);
+    //});
+    
 });
 
 
