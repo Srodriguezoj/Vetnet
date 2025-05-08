@@ -36,8 +36,11 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
+        // Guardamos el token en la sesión
+        session(['token' => $token]);
+
         //Devolvemos la respueta en formato json con la info del usuario, el token de acceso y el tipo de token
-        return response()->json(['data'=>$user,'access_token'=>$token,'token_type'=>'Bearer']);
+        return redirect()->route('dashboard');
     }
 
 
@@ -56,19 +59,19 @@ class AuthController extends Controller
         //Se crea el token para la sesión
         $token = $user->createToken('auth_token')->plainTextToken;
 
+        // Guardamos el token en la sesión
+        session(['token' => $token]);
+
         //Se devuelve la respuesta con la información
-        return response()->json([
-            'message'=> 'Hi '.$user->name,
-            'access_token'=> $token,
-            'token_type' => 'Bearer',
-            'user'=>$user,
-        ]);
+        return redirect()->route('dashboard');
     }
 
     public function logout(){
+        // Borramos todos los tokens del usuario
         auth()->user()->tokens()->delete();
-
-        return['message'=>'Logout with exit. Token was deleted'];
+         // Limpiamos la sesión
+        session()->flush();
+        return redirect()->route('login');
     }
 
 
