@@ -18,9 +18,20 @@ class Veterinary extends Model
         'specialty',
     ];
 
-   
+   //Relacion con la clase usuario
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user');
+    }
+
+    //Relacion de las citas que atiende el veterinario
+    public function appointments() {
+        return $this->hasMany(Appointment::class, 'id_veterinary');
+    }
+
+    //Un veterinario ha atendido varias citas
+    public function medicalRecords()
+    {
+        return $this->hasMany(MedicalRecord::class, 'id_veterinary');
     }
 }

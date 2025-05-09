@@ -64,8 +64,15 @@ class User extends Authenticatable
         return $this->role === $role;
     }
 
+    //Relacion con la clase veterinary
     public function veterinary()
     {
         return $this->hasOne(Veterinary::class, 'id_user');
+    }
+
+    //Relacion con la clase mascota donde indica que el usuario puede tener mas de una mascota
+    public function pets()
+    {
+        return $this->hasMany(Pet::class, 'id_owner');
     }
 }
