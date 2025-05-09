@@ -13,13 +13,19 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-            $table->enum('role', ['Admin', 'Veterinario', 'Cliente'])->default('Cliente');
+            $table->string('email', 200)->unique();
+            $table->string('password', 200);
+            $table->enum('role', ['Cliente', 'Veterinario', 'Admin'])->default('Cliente');
+            $table->string('dni', 15)->unique();
+            $table->string('name', 100);
+            $table->string('surname', 250);
+            $table->string('phone', 20)->nullable();
+            $table->string('address', 500)->nullable();
+            $table->string('city', 200)->nullable();
+            $table->string('country', 200)->nullable();
+            $table->string('postcode', 20)->nullable();
+            $table->dateTime('created_at', 3)->nullable();
+            $table->dateTime('updated_at', 3)->nullable();
 
         });
 
@@ -31,7 +37,7 @@ return new class extends Migration
 
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->longText('payload');
@@ -44,8 +50,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+        Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('users');
     }
 };

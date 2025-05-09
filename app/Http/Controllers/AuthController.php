@@ -15,11 +15,18 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         //Validamos los datos que nos llegan de la petición
-        $validator = Validator::make($request->all(),[
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-        ]);
+       $validator = Validator::make($request->all(), [
+        'name' => 'required|string|max:255',
+        'surname' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'dni' => 'required|string|max:15|unique:users',
+        'phone' => 'nullable|string|max:20',
+        'address' => 'nullable|string|max:255',
+        'city' => 'nullable|string|max:100',
+        'country' => 'nullable|string|max:100',
+        'postcode' => 'nullable|string|max:10',
+        'password' => 'required|string|min:8|confirmed',
+    ]);
 
         //Si los datos no son correctos devolverá un error
         if($validator->fails()){
@@ -28,9 +35,16 @@ class AuthController extends Controller
 
         //Creamos el usuario
         $user = User::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password']),
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'email' => $request->email,
+            'dni' => $request->dni,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'city' => $request->city,
+            'country' => $request->country,
+            'postcode' => $request->postcode,
+            'password' => Hash::make($request->password),
             'role' => 'Cliente',
         ]);
 
@@ -41,8 +55,6 @@ class AuthController extends Controller
 
         if($user->role === User::ROLE_CLIENT){
             return redirect()->route('cliente.dashboard');
-        }else if($user->role === User::ROLE_ADMIN || $user->role === User::ROLE_VET){
-            return redirect()->route('admin.dashboard');
         }else{
             return redirect('/');
         }

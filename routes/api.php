@@ -15,11 +15,6 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware(['auth:sanctum'])->group(function(){
 
     Route::get('/logout', [AuthController::class, 'logout']);
-
-    //ejm de ruta por roles:
-    // Route::middleware(['auth:sanctum', 'role:admin'])->get('/admin-area', function () {
-    //    return response()->json(['message' => 'Bienvenida zona admin']);
-    //});
     
 });
 
