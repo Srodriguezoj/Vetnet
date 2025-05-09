@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Pet;
 use Illuminate\Support\Facades\Hash;
 use Validator;
 use Illuminate\Support\Facades\Auth;
@@ -54,7 +55,7 @@ class AuthController extends Controller
         session(['token' => $token]);
 
         if($user->role === User::ROLE_CLIENT){
-            return redirect()->route('cliente.dashboard');
+            return redirect()->route('client.dashboard');
         }else{
             return redirect('/');
         }
@@ -80,7 +81,7 @@ class AuthController extends Controller
         session(['token' => $token]);
 
         if($user->role === User::ROLE_CLIENT){
-            return redirect()->route('cliente.dashboard');
+            return redirect()->route('client.dashboard');
         }else if($user->role === User::ROLE_ADMIN || $user->role === User::ROLE_VET){
             return redirect()->route('admin.dashboard');
         }else{

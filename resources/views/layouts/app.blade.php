@@ -1,14 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'VetNet') }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .main {
+            flex: 1;
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #f8f9fa;
+            padding-top: 1rem;
+            height: 100vh;
+            position: fixed;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 1rem;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        @yield('content')
+    <!-- Menú superior -->
+    <nav class="navbar navbar-light bg-light shadow-sm px-4">
+        <a class="navbar-brand" href="#">🐾 VetNet</a>
+        <div class="d-flex">
+            <div class="dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                    Perfil
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+                    <li><a class="dropdown-item" href="{{ route('client.showClient') }}">Mi perfil</a></li>
+                    <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                        @csrf
+                        <button type="submit" class="dropdown-item">Cerrar sesión</button>
+                    </form>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <div class="main">
+        <!-- Menú lateral -->
+        <aside class="sidebar border-end">
+            <ul class="nav flex-column">
+                <li class="nav-item"><a  href="{{ route('client.dashboard') }}" class="nav-link">Dashboard</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Citas</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Recetas</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Historial</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Facturación</a></li>
+            </ul>
+        </aside>
+
+        <!-- Contenido dinámico -->
+        <div class="content">
+            @yield('content')
+        </div>
     </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -24,7 +24,9 @@ class Pet extends Model
         'size',
         'weight',
     ];
-
+     
+     protected $dates = ['date_of_birth'];
+     
     //Relacion con el propietario de la mascota
     public function owner()
     {
