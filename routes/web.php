@@ -13,19 +13,20 @@ Route::view('/register', 'auth.register')->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 
-Route::get('/dashboard', function () {
-    // Verificar si el token existe en la sesión
-    if (!session()->has('token')) {
-        return redirect()->route('login');  // Redirigir a login si no hay token
+Route::middleware(['auth'])->get('/dashboard/client', function () {
+    if (auth()->user()->role !== 'Cliente') {
+        abort(403);
     }
+    return view('client.dashboard');
+})->name('cliente.dashboard');
 
-    // Recuperar el token
-    $token = session()->get('token');
+Route::middleware(['auth'])->get('/dashboard/admin-vet', function () {
+    if (!in_array(auth()->user()->role, ['Admin', 'Veterinario'])) {
+        abort(403);
+    }
+    return view('admin_vet.dashboard');
+})->name('admin.dashboard');
 
-    // Aquí podrías agregar lógica para validar el token si es necesario
-
-    return view('dashboard');
-})->middleware('auth:sanctum')->name('dashboard');
 
 Route::get('/logout', function () {
     Http::withToken(Session::get('token'))->post(env('APP_URL') . '/api/logout');

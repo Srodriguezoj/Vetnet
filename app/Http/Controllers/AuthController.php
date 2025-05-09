@@ -39,8 +39,13 @@ class AuthController extends Controller
         // Guardamos el token en la sesión
         session(['token' => $token]);
 
-        //Devolvemos la respueta en formato json con la info del usuario, el token de acceso y el tipo de token
-        return redirect()->route('dashboard');
+        if($user->role === User::ROLE_CLIENT){
+            return redirect()->route('cliente.dashboard');
+        }else if($user->role === User::ROLE_ADMIN || $user->role === User::ROLE_VET){
+            return redirect()->route('admin.dashboard');
+        }else{
+            return redirect('/');
+        }
     }
 
 
@@ -50,7 +55,7 @@ class AuthController extends Controller
         //Si el email o el password no son correctos...
         if(!Auth::attempt($request->only('email', 'password'))){
             //Se envia una respuesta informaco de que no estamos autorizados
-            return response()->json(['message'=>'Unauthorized'], 401);
+            return back()->withErrors(['email' => 'Email o contraseña incorrectos']);
         }
 
         //Si la autenticación ha tenido éxito, se busca al usuario en la BBDD
@@ -62,8 +67,13 @@ class AuthController extends Controller
         // Guardamos el token en la sesión
         session(['token' => $token]);
 
-        //Se devuelve la respuesta con la información
-        return redirect()->route('dashboard');
+        if($user->role === User::ROLE_CLIENT){
+            return redirect()->route('cliente.dashboard');
+        }else if($user->role === User::ROLE_ADMIN || $user->role === User::ROLE_VET){
+            return redirect()->route('admin.dashboard');
+        }else{
+            return redirect('/');
+        }
     }
 
     public function logout(){
