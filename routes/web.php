@@ -23,7 +23,9 @@ Route::get('/logout', function () {
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware(['auth'])->group(function () {
+
+//Rutas solo accesibles para clientes
+Route::middleware(['auth', 'role:Cliente'])->group(function () {
 
     // Dashboard cliente
     Route::get('/dashboard/client', [UserController::class, 'showPets'])->name('client.dashboard');
@@ -47,13 +49,18 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/showClient', [UserController::class, 'update'])->name('client.updateClient');
     });
 
+    
+});
+
+//Rutas solo accesibles para Admin y Veterinarios
+Route::middleware(['auth'])->group(function () {
+
     // Dashboard Admin/Vet
     Route::get('/dashboard/admin-vet', function () {
-        if (!in_array(auth()->user()->role, ['Admin', 'Veterinario'])) {
-            abort(403);
-        }
         return view('admin_vet.dashboard');
-    })->name('admin.dashboard');
+    })->middleware('role:Admin,Veterinario')->name('admin.dashboard');
+    
 });
+
 
 
