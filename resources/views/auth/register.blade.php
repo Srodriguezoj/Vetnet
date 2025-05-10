@@ -8,8 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            margin-top:10%;
-            min-height: 100vh;
+            margin-top:5%;
             display: flex;
             flex-direction: column;
         }
@@ -32,8 +31,20 @@
         .btn-primary{
             display:block;
             width: 200px;
+           
+        }
+        .display-flex-cont{
+            display:flex;
             margin-left: auto;
             margin-right: auto;
+            justify-content: center;
+        }
+        .btn-secondary{
+            display:block;
+            width: 200px;
+            background-color:white;
+            color:grey;
+             display:block;
         }
     </style>
 </head>
@@ -137,8 +148,12 @@
                                 <label for="password_confirmation" class="form-label">{{ __('Confirm Password') }}</label>
                                 <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" required>
                             </div>
-
-                            <button type="submit" class="btn btn-primary">{{ __('Register') }}</button>
+                            <div class=display-flex-cont>
+                                <button type="submit" class="btn btn-primary">{{ __('Register') }}</button>
+                            
+                                <a href="{{ route('login') }}" class="btn btn-secondary mt-3">Volver a login</a>
+                            </div>
+                            
                         </form>
                     </div>
                 </div>
