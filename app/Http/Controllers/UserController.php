@@ -43,7 +43,16 @@ class UserController extends Controller
     public function show()
     {
         $user = Auth::user();
-        return view('client.showClient', compact('user'));
+
+        if ($user->hasRole('Cliente')) {
+            return view('client.showClient', compact('user'));
+        }
+
+        if ($user->role == 'Admin' || $user->role == 'Veterinario') {
+            return view('veterinary.showProfile', compact('user'));
+        }
+
+        abort(403);
     }
 
     /**
@@ -52,7 +61,16 @@ class UserController extends Controller
     public function edit()
     {
         $user = Auth::user();
-        return view('client.editClient', compact('user'));
+
+        if ($user->hasRole('Cliente')) {
+            return view('client.editClient', compact('user'));
+        }
+
+        if ($user->role == 'Admin' || $user->role == 'Veterinario') {
+            return view('veterinary.editProfile', compact('user'));
+        }
+
+        abort(403);
     }
 
     /**
@@ -72,10 +90,17 @@ class UserController extends Controller
         ]);
 
         $user = auth()->user();
-
         $user->update($validated);
 
-        return redirect()->route('client.showClient')->with('success', 'Perfil actualizado con éxito');
+        if ($user->hasRole('Cliente')) {
+            return redirect()->route('client.showClient')->with('success', 'Perfil actualizado con éxito');
+        }
+
+        if ($user->role == 'Admin' || $user->role == 'Veterinario') {
+            return redirect()->route('veterinary.showProfile')->with('success', 'Perfil actualizado con éxito');
+        }
+
+        abort(403);
     }
 
     /**

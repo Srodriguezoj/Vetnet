@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app-admin')
 
 @section('content')
     <h1>Mi Perfil</h1>
@@ -22,6 +22,6 @@
         </div>
     </div>
 
-    <a href="{{ route('admin-vet.dashboard') }}" class="btn btn-secondary mt-3">Volver al dashboard</a>
-    <a href="{{ route('client.editClient') }}" class="btn btn-primary mt-3 ms-2">Editar perfil</a>
+    <a href="{{ route('veterinary.dashboard') }}" class="btn btn-secondary mt-3">Volver al dashboard</a>
+    <a href="{{ route('veterinary.editProfile') }}" class="btn btn-primary mt-3 ms-2">Editar perfil</a>
 @endsection

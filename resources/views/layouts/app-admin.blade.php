@@ -39,7 +39,7 @@
                     Perfil
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
-                    <li><a class="dropdown-item" href="{{ route('client.showClient') }}">Mi perfil</a></li>
+                    <li><a class="dropdown-item" href="{{ route('veterinary.showProfile') }}">Mi perfil</a></li>
                     <form action="{{ route('logout') }}" method="POST" class="d-inline">
                         @csrf
                         <button type="submit" class="dropdown-item">Cerrar sesión</button>
@@ -54,7 +54,7 @@
         <!-- Menú lateral -->
         <aside class="sidebar border-end">
             <ul class="nav flex-column">
-                <li class="nav-item"><a  href="{{ route('client.dashboard') }}" class="nav-link">Dashboard</a></li>
+                <li class="nav-item"><a  href="{{ route('veterinary.dashboard') }}" class="nav-link">Dashboard</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Citas</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Historial</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Facturación</a></li>

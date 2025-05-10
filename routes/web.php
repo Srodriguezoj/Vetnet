@@ -56,10 +56,16 @@ Route::middleware(['auth', 'role:Cliente'])->group(function () {
 Route::middleware(['auth'])->group(function () {
 
     // Dashboard Admin/Vet
-    Route::get('/dashboard/admin-vet', function () {
-        return view('admin_vet.dashboard');
-    })->middleware('role:Admin,Veterinario')->name('admin.dashboard');
+    Route::get('/dashboard/veterinary', function () {
+        return view('veterinary.dashboard');
+    })->middleware('role:Admin,Veterinario')->name('veterinary.dashboard');
     
+    // Perfil del cliente
+   Route::middleware(['auth', 'role:Admin,Veterinario'])->group(function () {
+        Route::get('/showProfile', [UserController::class, 'show'])->name('veterinary.showProfile');
+        Route::get('/editProfile', [UserController::class, 'edit'])->name('veterinary.editProfile');
+        Route::put('/showProfile', [UserController::class, 'update'])->name('veterinary.updateProfile');
+    });
 });
 
 
