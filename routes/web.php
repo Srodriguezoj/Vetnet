@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VeterinaryController;
+use App\Http\Controllers\AppointmentController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -44,14 +45,15 @@ Route::middleware(['auth', 'role:Cliente'])->group(function () {
     });
 
     // Perfil del cliente
+    Route::get('/showClient', [UserController::class, 'show'])->name('client.showClient');
+    Route::get('/editClient', [UserController::class, 'edit'])->name('client.editClient');
+    Route::put('/showClient', [UserController::class, 'update'])->name('client.updateClient');
+    Route::put('client/cambiar-contraseña', [UserController::class, 'updatePassword'])->name('client.updatePassword');
    
-        Route::get('/showClient', [UserController::class, 'show'])->name('client.showClient');
-        Route::get('/editClient', [UserController::class, 'edit'])->name('client.editClient');
-        Route::put('/showClient', [UserController::class, 'update'])->name('client.updateClient');
-        Route::put('client/cambiar-contraseña', [UserController::class, 'updatePassword'])->name('client.updatePassword');
-   
-
-    
+    //Crear citas
+    Route::get('appointments/create', [AppointmentController::class, 'showForm'])->name('appointments.create');
+    Route::post('appointments/store', [AppointmentController::class, 'store'])->name('appointments.store');
+    Route::post('/appointments/checkAvailability', [AppointmentController::class, 'checkAvailability'])->name('appointments.checkAvailability');
 });
 
 //Rutas solo accesibles para Admin y Veterinarios
@@ -77,6 +79,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/veterinary', [VeterinaryController::class, 'index'])->name('veterinary.showVeterinaries');
         Route::delete('/veterinary/{id}', [VeterinaryController::class, 'delete'])->name('veterinary.delete');
     });
+
+    
 });
 
 

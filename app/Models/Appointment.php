@@ -12,14 +12,14 @@ class Appointment extends Model
    use HasFactory;
 
     protected $fillable = [
-        'id_pet',
-        'id_veterinary',
-        'date',
-        'time',
-        'title',
-        'description',
-        'state',
-        'specialty',
+        'id_pet', 
+        'id_veterinary', 
+        'specialty', 
+        'date', 
+        'time', 
+        'title', 
+        'description', 
+        'state'
     ];
 
     //Indica que la cita está relacionada con una mascota por su id

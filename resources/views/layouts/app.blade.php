@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ config('app.name', 'VetNet') }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         body {
             min-height: 100vh;
@@ -55,7 +56,7 @@
         <aside class="sidebar border-end">
             <ul class="nav flex-column">
                 <li class="nav-item"><a  href="{{ route('client.dashboard') }}" class="nav-link">Dashboard</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Citas</a></li>
+                <li class="nav-item"><a  href="{{ route('appointments.create') }}" class="nav-link">Citas</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Historial</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Facturación</a></li>
             </ul>
