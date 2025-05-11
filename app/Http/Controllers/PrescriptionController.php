@@ -47,6 +47,9 @@ class PrescriptionController extends Controller
         return response()->json([
             'id' => $prescription->id,
             'medication' => $prescription->medication,
+            'dosage' => $prescription->dosage,
+            'instructions' => $prescription->instructions,
+            'duration' => $prescription->duration,
         ]);
     }
 

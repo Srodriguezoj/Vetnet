@@ -79,7 +79,17 @@ class InvoiceController extends Controller
             $item->save();
         }
 
-        return response()->json(['id' => $invoice->id, 'invoice_number' => $invoice->invoice_number], 201);
+        // Obtener los ítems recién creados para incluirlos en la respuesta
+        $invoiceItems = InvoiceItem::where('id_invoice', $invoice->id)->get();
+
+        return response()->json([
+            'id' => $invoice->id,
+            'invoice_number' => $invoice->invoice_number,
+            'items' => $invoiceItems, 
+            'total' => $invoice->total,
+            'tax_percentage' => $invoice->tax_percentage,
+            'total_with_tax' => $invoice->total_with_tax,
+        ]);
     }
 
     /**
