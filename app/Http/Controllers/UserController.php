@@ -103,6 +103,34 @@ class UserController extends Controller
         abort(403);
     }
 
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:8|confirmed',
+        ]);
+
+        if (!Hash::check($request->current_password, auth()->user()->password)) {
+            return back()->withErrors(['current_password' => 'La contraseña actual no es válida.']);
+        }
+
+        auth()->user()->update([
+            'password' => Hash::make($request->new_password),
+        ]);
+
+        $user = auth()->user(); 
+
+        if ($user->role == 'Cliente') {
+            return redirect()->route('client.showClient')->with('success', 'Perfil actualizado con éxito');
+        }
+
+        if ($user->role == 'Admin' || $user->role == 'Veterinario') {
+           return redirect()->route('veterinary.showProfile')->with('success', 'Contraseña actualizada correctamente.');
+        }
+
+        
+    }
+
     /**
      * Remove the specified resource from storage.
      */

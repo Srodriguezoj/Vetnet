@@ -43,11 +43,12 @@ Route::middleware(['auth', 'role:Cliente'])->group(function () {
     });
 
     // Perfil del cliente
-   Route::middleware(['verified'])->group(function () {
+   
         Route::get('/showClient', [UserController::class, 'show'])->name('client.showClient');
         Route::get('/editClient', [UserController::class, 'edit'])->name('client.editClient');
         Route::put('/showClient', [UserController::class, 'update'])->name('client.updateClient');
-    });
+        Route::put('client/cambiar-contraseña', [UserController::class, 'updatePassword'])->name('client.updatePassword');
+   
 
     
 });
@@ -65,6 +66,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/showProfile', [UserController::class, 'show'])->name('veterinary.showProfile');
         Route::get('/editProfile', [UserController::class, 'edit'])->name('veterinary.editProfile');
         Route::put('/showProfile', [UserController::class, 'update'])->name('veterinary.updateProfile');
+        Route::put('perfil/cambiar-contraseña', [UserController::class, 'updatePassword'])->name('veterinary.updatePassword');
     });
 });
 
