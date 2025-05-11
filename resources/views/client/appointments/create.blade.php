@@ -9,14 +9,10 @@
 @section('content')
     <div class="container">
         <h1>Reservar Cita</h1>
-
-        <!-- Meta CSRF para JS -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
-
         <form method="POST" action="{{ route('appointments.store') }}">
             @csrf
 
-            <!-- Especialidad -->
             <div class="form-group">
                 <label for="specialty">Especialidad</label>
                 <select name="specialty" id="specialty" class="form-control">
@@ -27,7 +23,6 @@
                 </select>
             </div>
 
-            <!-- Mascota -->
             <div class="form-group">
                 <label for="id_pet">Seleccionar Mascota</label>
                 <select name="id_pet" id="id_pet" class="form-control">
@@ -37,7 +32,6 @@
                 </select>
             </div>
 
-            <!-- Fecha y Hora -->
             <div class="form-group">
                 <label for="date">Fecha</label>
                 <input type="date" name="date" id="date" class="form-control">
@@ -48,16 +42,13 @@
                 <input type="time" name="time" id="time" class="form-control">
             </div>
 
-            <!-- Veterinario -->
             <div class="form-group">
                 <label for="id_veterinary">Veterinario disponible</label>
                 <select name="id_veterinary" id="id_veterinary" class="form-control">
                     <option value="">Selecciona un veterinario</option>
-                    <!-- Se rellenará dinámicamente vía JavaScript -->
                 </select>
             </div>
 
-            <!-- Título y Descripción -->
             <div class="form-group">
                 <label for="title">Título</label>
                 <input type="text" name="title" id="title" class="form-control">
@@ -114,20 +105,14 @@
                 }
             })
             .catch(error => {
-                console.log("Error en la solicitud AJAX:", error);
-
-                // Mostrar más detalles del error
                 if (error.response) {
-                    console.log("Respuesta del servidor:", error.response);
                     alert('Error del servidor: ' + error.response.status + ' - ' + error.response.statusText);
                 } else {
-                    console.log("Error general:", error);
                     alert('Hubo un error al obtener los veterinarios. Por favor, intenta nuevamente.');
                 }
             });
         }
     }
-
     document.getElementById('specialty').addEventListener('change', updateVeterinarians);
     document.getElementById('date').addEventListener('change', updateVeterinarians);
     document.getElementById('time').addEventListener('change', updateVeterinarians);

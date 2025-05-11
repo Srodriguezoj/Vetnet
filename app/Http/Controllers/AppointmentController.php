@@ -39,10 +39,6 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
-        // Log de los datos recibidos
-        Log::info('Intentando guardar cita con datos:', $request->all());
-
-        // Validar la solicitud
         $request->validate([
                 'id_pet' => 'required|exists:pets,id',
                 'id_veterinary' => 'required|exists:veterinaries,id',
@@ -67,13 +63,8 @@ class AppointmentController extends Controller
                 'state' => 'Pendiente',
             ]);
 
-            Log::info('Cita creada correctamente');
-
             return redirect()->route('client.dashboard')->with('success', 'Cita reservada correctamente.');
-
-     
         } catch (Exception $e) {
-            Log::error('Error al crear cita: ' . $e->getMessage());
             return back()->withErrors(['error' => 'Hubo un problema al guardar la cita.']);
         }
     }
@@ -135,14 +126,12 @@ class AppointmentController extends Controller
         $date = $request->date;
         $time = $request->time;
 
-        // Veterinarios ocupados en esa hora
         $veterinarians = Veterinary::whereHas('appointments', function ($query) use ($specialty, $date, $time) {
             $query->where('specialty', $specialty)
                 ->where('date', $date)
                 ->where('time', $time);
         })->pluck('id');
 
-        // Veterinarios disponibles
         $availableVeterinarians = Veterinary::where('specialty', $specialty)
             ->whereNotIn('id', $veterinarians)
             ->with('user')
@@ -153,7 +142,6 @@ class AppointmentController extends Controller
                     'name' => $vet->user->name . ' ' . $vet->user->surname,
                 ];
             });
-
         return response()->json($availableVeterinarians);
     }
 }
