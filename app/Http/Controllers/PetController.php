@@ -89,8 +89,8 @@ class PetController extends Controller
     }
 
     public function show($id)
-        {
-            $pet = Pet::findOrFail($id);
-            return view('client.showPet', compact('pet'));
-        }
+    {
+        $pet = Pet::with(['medicalRecords', 'appointments'])->findOrFail($id);
+        return view('client.showPet', compact('pet'));
+    }
 }

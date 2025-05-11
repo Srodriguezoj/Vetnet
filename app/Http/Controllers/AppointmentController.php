@@ -98,7 +98,13 @@ class AppointmentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $appointment = Appointment::findOrFail($id);
+        $petId = $appointment->id_pet;
+
+        $appointment->state = 'Cancelada';  
+        $appointment->save(); 
+
+        return redirect()->route('client.showPet', ['pet' => $petId])->with('success', 'La cita ha sido cancelada correctamente.');
     }
 
     public function showForm()

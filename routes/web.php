@@ -54,6 +54,8 @@ Route::middleware(['auth', 'role:Cliente'])->group(function () {
     Route::get('appointments/create', [AppointmentController::class, 'showForm'])->name('appointments.create');
     Route::post('appointments/store', [AppointmentController::class, 'store'])->name('appointments.store');
     Route::post('/appointments/checkAvailability', [AppointmentController::class, 'checkAvailability'])->name('appointments.checkAvailability');
+    Route::delete('/appointments/{appointment}', [AppointmentController::class, 'destroy'])->name('appointments.destroy');
+
 });
 
 //Rutas solo accesibles para Admin y Veterinarios
