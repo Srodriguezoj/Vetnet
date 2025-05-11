@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VeterinaryController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -56,17 +57,25 @@ Route::middleware(['auth', 'role:Cliente'])->group(function () {
 //Rutas solo accesibles para Admin y Veterinarios
 Route::middleware(['auth'])->group(function () {
 
-    // Dashboard Admin/Vet
+    // Dashboard
     Route::get('/dashboard/veterinary', function () {
         return view('veterinary.dashboard');
     })->middleware('role:Admin,Veterinario')->name('veterinary.dashboard');
     
-    // Perfil del cliente
+    // Perfil vet-admin
    Route::middleware(['auth', 'role:Admin,Veterinario'])->group(function () {
         Route::get('/showProfile', [UserController::class, 'show'])->name('veterinary.showProfile');
         Route::get('/editProfile', [UserController::class, 'edit'])->name('veterinary.editProfile');
         Route::put('/showProfile', [UserController::class, 'update'])->name('veterinary.updateProfile');
         Route::put('perfil/cambiar-contraseña', [UserController::class, 'updatePassword'])->name('veterinary.updatePassword');
+    });
+
+    //Crear veterinarios (Solo para admin)
+    Route::middleware(['auth', 'role:Admin'])->group(function () {
+        Route::get('/veterinary/create', [VeterinaryController::class, 'create'])->name('veterinary.create');
+        Route::post('/veterinary', [VeterinaryController::class, 'store'])->name('veterinary.store');
+        Route::get('/veterinary', [VeterinaryController::class, 'index'])->name('veterinary.showVeterinaries');
+        Route::delete('/veterinary/{id}', [VeterinaryController::class, 'delete'])->name('veterinary.delete');
     });
 });
 

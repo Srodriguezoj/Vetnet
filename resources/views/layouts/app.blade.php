@@ -56,7 +56,6 @@
             <ul class="nav flex-column">
                 <li class="nav-item"><a  href="{{ route('client.dashboard') }}" class="nav-link">Dashboard</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Citas</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Recetas</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Historial</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Facturación</a></li>
             </ul>
