@@ -28,6 +28,10 @@
             padding: 1rem;
             width: 100%;
         }
+        .time-select {
+            max-height: 50px;
+            overflow-y: auto; 
+        }
     </style>
 </head>
 <body>

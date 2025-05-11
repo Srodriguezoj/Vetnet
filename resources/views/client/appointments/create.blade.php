@@ -39,7 +39,7 @@
 
             <div class="form-group">
                 <label for="time">Hora</label>
-                <input type="time" name="time" id="time" class="form-control">
+                <select name="time" id="time" class="form-control time-select"></select>
             </div>
 
             <div class="form-group">
@@ -58,13 +58,62 @@
                 <label for="description">Descripción</label>
                 <textarea name="description" id="description" class="form-control"></textarea>
             </div>
-
+            <br/>
             <button type="submit" class="btn btn-primary">Reservar Cita</button>
         </form>
     </div>
 
+   
 
    <script>
+    function updateAvailableTimes() {
+        const date = document.getElementById('date').value;
+        const timeSelect = document.getElementById('time');
+        const selectedDate = new Date(date);
+        const dayOfWeek = selectedDate.getDay();
+
+        timeSelect.innerHTML = '';
+        if (dayOfWeek === 0) {
+            alert('No se pueden reservar citas en domingo.');
+            return;
+        }
+
+        let availableTimes = [];
+        if (dayOfWeek === 6) {
+            availableTimes = generateAvailableTimes('10:00', '14:00');
+        } else {
+            availableTimes = generateAvailableTimes('10:00', '14:00').concat(generateAvailableTimes('16:00', '20:00'));
+        }
+        availableTimes.forEach(time => {
+            const option = document.createElement('option');
+            option.value = time;
+            option.textContent = time;
+            timeSelect.appendChild(option);
+        });
+    }
+    function generateAvailableTimes(startTime, endTime) {
+        const availableTimes = [];
+        const start = toMinutes(startTime);
+        const end = toMinutes(endTime);
+
+        for (let minutes = start; minutes < end; minutes += 30) {
+            availableTimes.push(toTimeString(minutes));
+        }
+        return availableTimes;
+    }
+
+    function toMinutes(time) {
+        const [hour, minute] = time.split(':').map(num => parseInt(num, 10));
+        return hour * 60 + minute;
+    }
+
+    function toTimeString(minutes) {
+        const hour = Math.floor(minutes / 60);
+        const minute = minutes % 60;
+        return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+    }
+    document.getElementById('date').addEventListener('change', updateAvailableTimes);
+    window.addEventListener('load', updateAvailableTimes);
     function updateVeterinarians() {
         const specialty = document.getElementById('specialty').value;
         const date = document.getElementById('date').value;
@@ -113,6 +162,7 @@
             });
         }
     }
+
     document.getElementById('specialty').addEventListener('change', updateVeterinarians);
     document.getElementById('date').addEventListener('change', updateVeterinarians);
     document.getElementById('time').addEventListener('change', updateVeterinarians);
