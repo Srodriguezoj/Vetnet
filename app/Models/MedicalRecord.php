@@ -42,7 +42,7 @@ class MedicalRecord extends Model
          return $this->belongsTo(Prescription::class, 'id_prescription');
     }
 
-    // public function invoice() {
-    //     return $this->belongsTo(Invoice::class, 'id_invoice');
-    // }
+     public function invoice() {
+         return $this->belongsTo(Invoice::class, 'id_invoice');
+     }
 }
