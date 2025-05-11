@@ -38,4 +38,10 @@ class Invoice extends Model
     {
         return $this->hasMany(MedicalRecord::class, 'id_invoice');
     }
+
+    //Relacion con los conceptos de la factura
+    public function items()
+    {
+        return $this->hasMany(InvoiceItem::class, 'id_invoice');
+    }
 }

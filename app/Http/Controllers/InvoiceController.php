@@ -10,6 +10,7 @@ use App\Models\Appointment;
 use App\Models\Prescription;
 use App\Models\MedicalRecord;
 use App\Models\Invoice;
+use App\Models\InvoiceItem;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Validator;
@@ -42,12 +43,43 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        $invoice = Invoice::create($request->all());
+        $data = $request->all();
 
-        return response()->json([
-            'id' => $invoice->id,
-            'invoice_number' => 'Factura #' . $invoice->id, // O el número real si lo tienes
+        // Decodificar 'items' si es JSON
+        $decodedItems = json_decode($request->input('items'), true);
+
+        if (!is_array($decodedItems)) {
+            return response()->json(['message' => 'Formato de ítems inválido'], 400);
+        }
+
+        // Inyectar items decodificados en el array de validación
+        $request->merge(['items' => $decodedItems]);
+
+        // Validación
+        $validated = $request->validate([
+            'id_client' => 'required|exists:users,id',
+            'id_veterinary' => 'required|exists:veterinaries,id',
+            'id_appointment' => 'required|exists:appointments,id',
+            'date' => 'required|date',
+            'status' => 'required|string',
+            'items' => 'required|array',
+            'total' => 'required|numeric',
+            'tax_percentage' => 'required|numeric',
+            'total_with_tax' => 'required|numeric',
         ]);
+
+        // Crear la factura
+        $invoice = new Invoice($validated);
+        $invoice->save();
+
+        // Crear los ítems de la factura
+        foreach ($validated['items'] as $itemData) {
+            $item = new InvoiceItem($itemData);
+            $item->id_invoice = $invoice->id;
+            $item->save();
+        }
+
+        return response()->json(['id' => $invoice->id, 'invoice_number' => $invoice->invoice_number], 201);
     }
 
     /**
