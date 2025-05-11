@@ -81,10 +81,6 @@
 
                                         <!-- Mostrar el estado de la cita -->
                                         <td>
-                                            <span class="badge {{ $appointment->state == 'Cancelada' ? 'badge-danger' : 'badge-success' }}">
-                                                {{ ucfirst($appointment->state) }}
-                                            </span>
-                                       
                                             <!-- No mostrar el botón de eliminar si la cita está cancelada -->
                                             @if ($appointment->state != 'Cancelada')
                                                 <form action="{{ route('appointments.destroy', $appointment->id) }}" method="POST" onsubmit="return confirm('¿Estás segura de cancelar esta cita?')">

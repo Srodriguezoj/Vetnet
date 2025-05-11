@@ -150,4 +150,16 @@ class AppointmentController extends Controller
             });
         return response()->json($availableVeterinarians);
     }
+
+    public function updateState(Appointment $appointment, $state)
+    {
+        if (!in_array($state, ['Confirmada', 'Cancelada'])) {
+            return redirect()->back()->with('error', 'Estado no válido');
+        }
+
+        $appointment->state = $state;
+        $appointment->save();
+
+        return redirect()->route('veterinary.showDates')->with('success', 'Cita actualizada con éxito');
+    }
 }

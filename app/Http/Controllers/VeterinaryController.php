@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Veterinary;
+use App\Models\Appointment;
+use App\Http\Controllers\AppointmentController;
 use Illuminate\Support\Facades\Hash;
 use Validator;
 use Illuminate\Support\Facades\Auth;
@@ -62,5 +64,18 @@ class VeterinaryController extends Controller
     {
         $veterinaries = Veterinary::with('user')->get();
         return view('veterinary.showVeterinaries', compact('veterinaries'));
+    }
+
+    public function showDates()
+    {
+        $veterinary = Veterinary::where('id_user', auth()->id())->first();
+
+        if (!$veterinary) {
+            return redirect()->back()->with('error', 'No estás registrado como veterinario.');
+        }
+
+        $appointments = Appointment::where('id_veterinary', $veterinary->id)->get();
+
+        return view('veterinary.showDates', compact('appointments'));
     }
 }

@@ -60,7 +60,7 @@
                  @if(auth()->user()->role == 'Admin')
                     <li class="nav-item"><a  href="{{ route('veterinary.showVeterinaries') }}" class="nav-link">Veterinarios</a></li>
                 @endif 
-                <li class="nav-item"><a href="#" class="nav-link">Citas</a></li>
+               <li class="nav-item"><a href="{{ route('veterinary.showDates') }}" class="nav-link">Citas</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Facturación</a></li>
             </ul>
         </aside>

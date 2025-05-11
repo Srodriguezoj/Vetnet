@@ -82,7 +82,12 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/veterinary/{id}', [VeterinaryController::class, 'delete'])->name('veterinary.delete');
     });
 
-    
+    //Gestionar citas
+    Route::get('/veterinary/showDates', [VeterinaryController::class, 'showDates'])->name('veterinary.showDates');
+    Route::put('/appointments/{appointment}/state/{state}', [AppointmentController::class, 'updateState'])->name('appointments.updateState');
+
+    //Gestionar registros de citas
+    Route::get('/medicalRecords/create/{appointment}', [MedicalRecordController::class, 'create'])->name('medicalRecords.create');
 });
 
 
