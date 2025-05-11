@@ -12,22 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('medical_records', function (Blueprint $table) {
-        $table->id();
-        $table->unsignedBigInteger('id_pet');
-        $table->unsignedBigInteger('id_veterinary');
-        $table->unsignedBigInteger('id_appointment');
-        $table->unsignedBigInteger('id_prescription')->nullable();
-        $table->unsignedBigInteger('id_invoice')->nullable();
-        $table->text('diagnosis');
-        $table->timestamps();
+            $table->id();
+            $table->unsignedBigInteger('id_pet');
+            $table->unsignedBigInteger('id_veterinary');
+            $table->unsignedBigInteger('id_appointment');
+            $table->unsignedBigInteger('id_prescription')->nullable();
+            $table->unsignedBigInteger('id_invoice')->nullable();
+            $table->text('diagnosis');
+            $table->timestamps();
 
-        // Definir las claves foráneas
-        $table->foreign('id_pet')->references('id')->on('pets')->onDelete('cascade');
-        $table->foreign('id_veterinary')->references('id')->on('veterinaries')->onDelete('cascade');
-        $table->foreign('id_appointment')->references('id')->on('appointments')->onDelete('cascade');
-        $table->foreign('id_prescription')->references('id')->on('prescriptions')->onDelete('set null');  
-        $table->foreign('id_invoice')->references('id')->on('invoices')->onDelete('set null'); 
-    });
+            // Definir las claves foráneas
+            $table->foreign('id_pet')->references('id')->on('pets')->onDelete('cascade');
+            $table->foreign('id_veterinary')->references('id')->on('veterinaries')->onDelete('cascade');
+            $table->foreign('id_appointment')->references('id')->on('appointments')->onDelete('cascade');
+            $table->foreign('id_prescription')->references('id')->on('prescriptions')->onDelete('set null');  
+            $table->foreign('id_invoice')->references('id')->on('invoices')->onDelete('set null'); 
+        });
     }
 
     /**

@@ -74,7 +74,7 @@ class VeterinaryController extends Controller
             return redirect()->back()->with('error', 'No estás registrado como veterinario.');
         }
 
-        $appointments = Appointment::where('id_veterinary', $veterinary->id)->get();
+       $appointments = Appointment::where('id_veterinary', $veterinary->id)->with('pet.owner')->get();
 
         return view('veterinary.showDates', compact('appointments'));
     }

@@ -6,6 +6,8 @@ use App\Http\Controllers\PetController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VeterinaryController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\PrescriptionController;
+use App\Http\Controllers\MedicalRecordController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -72,6 +74,16 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/editProfile', [UserController::class, 'edit'])->name('veterinary.editProfile');
         Route::put('/showProfile', [UserController::class, 'update'])->name('veterinary.updateProfile');
         Route::put('perfil/cambiar-contraseña', [UserController::class, 'updatePassword'])->name('veterinary.updatePassword');
+
+        //Gestionar citas
+        Route::get('/veterinary/showDates', [VeterinaryController::class, 'showDates'])->name('veterinary.showDates');
+        Route::put('/appointments/{appointment}/state/{state}', [AppointmentController::class, 'updateState'])->name('appointments.updateState');
+
+        //Gestionar registros de citas
+        Route::resource('medical-records', MedicalRecordController::class);
+        Route::get('/medicalRecords/create/{appointment}', [MedicalRecordController::class, 'create'])->name('medical-records.create');
+        Route::post('/prescriptions', [PrescriptionController::class, 'store'])->name('prescriptions.store');
+        Route::post('/medical-records', [MedicalRecordController::class, 'store'])->name('medicalRecords.store');
     });
 
     //Crear veterinarios (Solo para admin)
@@ -82,12 +94,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/veterinary/{id}', [VeterinaryController::class, 'delete'])->name('veterinary.delete');
     });
 
-    //Gestionar citas
-    Route::get('/veterinary/showDates', [VeterinaryController::class, 'showDates'])->name('veterinary.showDates');
-    Route::put('/appointments/{appointment}/state/{state}', [AppointmentController::class, 'updateState'])->name('appointments.updateState');
-
-    //Gestionar registros de citas
-    Route::get('/medicalRecords/create/{appointment}', [MedicalRecordController::class, 'create'])->name('medicalRecords.create');
+    
 });
 
 

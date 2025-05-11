@@ -82,12 +82,14 @@
                                         <!-- Mostrar el estado de la cita -->
                                         <td>
                                             <!-- No mostrar el botón de eliminar si la cita está cancelada -->
-                                            @if ($appointment->state != 'Cancelada')
+                                            @if ($appointment->state == 'Pendiente' || $appointment->state == 'Confirmada')
                                                 <form action="{{ route('appointments.destroy', $appointment->id) }}" method="POST" onsubmit="return confirm('¿Estás segura de cancelar esta cita?')">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm">Cancelar</button>
                                                 </form>
+
+                                            @elseif ($appointment->state == 'Completada')
                                             @endif
                                         </td>
                                     </tr>

@@ -3,6 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Veterinary;
+use App\Models\Pet;
+use App\Models\Appointment;
+use App\Models\Prescription;
+use App\Models\MedicalRecord;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
+use Validator;
+use Illuminate\Support\Facades\Auth;
+use \stdClass;
+use App\Http\Controllers\AuthController;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class PrescriptionController extends Controller
 {
@@ -27,7 +41,16 @@ class PrescriptionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'medication' => 'required|string',
+            'dosage' => 'required|string',
+            'instructions' => 'required|string',
+            'duration' => 'required|string',
+        ]);
+
+        $prescription = Prescription::create($validated);
+
+        return response()->json(['id' => $prescription->id,'medication' => $prescription->medication,]);
     }
 
     /**
