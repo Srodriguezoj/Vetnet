@@ -38,9 +38,7 @@
             <a href="{{ route('pets.editPet', ['pet' => $pet->id]) }}" class="btn btn-primary mt-3">Editar mascota</a>
 
             <div class="mt-3">
-               <a href="{{ route('client.showMedicalRecords', ['pet' => $pet->id]) }}" class="btn btn-info w-100">
-                    Consultar historial clínico
-                </a>
+               <a href="{{ route('medicalRecords.show', $record->id) }}" class="btn btn-primary btn-sm">Consultar historia</a>
             </div>
         </div>
 

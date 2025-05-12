@@ -32,6 +32,38 @@
             max-height: 50px;
             overflow-y: auto; 
         }
+
+         .card {
+        border-radius: 10px;
+        border: 1px solid #ddd;
+    }
+
+    .card-body {
+        padding: 20px;
+        background-color: #f4f4f4;
+        border-radius: 8px;
+        
+    }
+
+    .card-body .d-flex {
+        justify-content: space-between;
+    }
+
+    .card-body .d-flex .flex-column {
+        max-width: 50%;
+    }
+
+    .card-body .d-flex .flex-column span {
+        display: block;
+    }
+
+    .btn {
+        text-transform: uppercase;
+    }
+
+    .card-body .d-flex .flex-column.align-items-end {
+        align-items: flex-end;
+    }
     </style>
 </head>
 <body>

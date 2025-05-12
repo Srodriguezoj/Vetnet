@@ -18,6 +18,7 @@ use \stdClass;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PrescriptionController extends Controller
 {
@@ -83,5 +84,19 @@ class PrescriptionController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function download($id)
+    {
+        $prescription = Prescription::with('medicalRecord.pet.owner')->findOrFail($id);
+
+        $pet = $prescription->medicalRecord->pet ?? null;
+        $owner = $pet->owner ?? null;
+
+        return Pdf::loadView('pdf.prescription', [
+            'prescription' => $prescription,
+            'pet' => $pet,
+            'owner' => $owner,
+        ])->download('prescripcion_' . $prescription->id . '.pdf');
     }
 }

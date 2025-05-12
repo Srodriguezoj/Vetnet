@@ -63,6 +63,9 @@ Route::middleware(['auth', 'role:Cliente'])->group(function () {
     //Historial clinico
     Route::get('/pets/{pet}/medicalRecords', [PetController::class, 'showMedicalRecords'])->name('client.showMedicalRecords');
     Route::get('/medical-records/{medicalRecord}', [MedicalRecordController::class, 'show'])->name('medicalRecords.show');
+
+    //Descara de documentos
+    Route::get('/prescription/{id}/download', [PrescriptionController::class, 'download'])->name('prescription.download');
 });
 
 //Rutas solo accesibles para Admin y Veterinarios
