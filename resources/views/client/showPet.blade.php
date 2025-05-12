@@ -37,9 +37,15 @@
             <a href="{{ route('client.dashboard') }}" class="btn btn-secondary mt-3 me-2">Volver a tus mascotas</a>
             <a href="{{ route('pets.editPet', ['pet' => $pet->id]) }}" class="btn btn-primary mt-3">Editar mascota</a>
 
-            <div class="mt-3">
-               <a href="{{ route('medicalRecords.show', $record->id) }}" class="btn btn-primary btn-sm">Consultar historia</a>
-            </div>
+            @if ($pet->medicalRecords->isNotEmpty())
+                <div class="mt-3">
+                    <a href="{{ route('client.showMedicalRecords', $pet->id) }}" class="btn btn-primary btn-sm">Consultar historia clínica</a>
+                </div>
+            @else
+                <div class="mt-3">
+                    <p>No hay registros médicos para esta mascota.</p>
+                </div>
+            @endif
         </div>
 
         <!-- Columna derecha: Citas -->
@@ -71,14 +77,12 @@
 
                                         <!-- Mostrar el estado de la cita -->
                                         <td>
-                                            <!-- No mostrar el botón de eliminar si la cita está cancelada -->
                                             @if ($appointment->state == 'Pendiente' || $appointment->state == 'Confirmada')
                                                 <form action="{{ route('appointments.destroy', $appointment->id) }}" method="POST" onsubmit="return confirm('¿Estás segura de cancelar esta cita?')">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm">Cancelar</button>
                                                 </form>
-
                                             @elseif ($appointment->state == 'Completada')
                                             @endif
                                         </td>
