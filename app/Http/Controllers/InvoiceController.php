@@ -84,7 +84,6 @@ class InvoiceController extends Controller
 
         return response()->json([
             'id' => $invoice->id,
-            'invoice_number' => $invoice->invoice_number,
             'items' => $invoiceItems, 
             'total' => $invoice->total,
             'tax_percentage' => $invoice->tax_percentage,

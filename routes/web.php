@@ -9,6 +9,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\MedicalRecordController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\VaccineController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -85,8 +86,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/medicalRecords/create/{appointment}', [MedicalRecordController::class, 'create'])->name('medical-records.create');
         Route::post('/prescriptions', [PrescriptionController::class, 'store'])->name('prescriptions.store');
         Route::post('/medical-records', [MedicalRecordController::class, 'store'])->name('medicalRecords.store');
-         Route::post('/invoices', [InvoiceController::class, 'store'])->name('invoices.store');
+        Route::post('/invoices', [InvoiceController::class, 'store'])->name('invoices.store');
         Route::resource('invoices', InvoiceController::class)->except(['store']);
+        Route::post('/vaccine', [VaccineController::class, 'store'])->name('vaccine.store');
     });
 
     //Crear veterinarios (Solo para admin)

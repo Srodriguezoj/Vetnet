@@ -52,6 +52,31 @@
             Añadir prescripción
         </button>
 
+        <!-- Vacuna -->
+        <div class="mb-3">
+            <label for="vaccine_name" class="form-label">Prescripción Vacuna</label>
+            <div class="form-group">
+                <label for="vacuna_tipo_de_vacuna">Tipo de vacuna:</label>
+                <span id="vacuna_tipo_de_vacuna" class="form-control">Información de tipo de vacuna</span>
+            </div>
+            <div class="form-group">
+                <label for="vacuna_etiqueta">Etiqueta:</label>
+                <span id="vacuna_etiqueta" class="form-control">Información de etiqueta</span>
+            </div>
+            <div class="form-group">
+                <label for="vacuna_num_lote">Número de lote:</label>
+                <span id="vacuna_num_lote" class="form-control">Información de número de lote</span>
+            </div>
+            <div class="form-group">
+                <label for="vacuna_num_expedicion">Número de expedición:</label>
+                <span id="vacuna_num_expedicion" class="form-control">Información del número de expedición</span>
+            </div>
+        </div>
+        <input type="hidden" name="id_vaccine" id="id_vaccine">
+        <button type="button" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#vaccineModal">
+            Añadir vacuna
+        </button>
+
         <!-- Factura -->
         <div class="mb-3">
             <label for="invoice_name" class="form-label">Factura seleccionada</label>
@@ -118,6 +143,44 @@
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Guardar prescripción</button>
+            </div>
+        </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Vacuna -->
+<div class="modal fade" id="vaccineModal" tabindex="-1" aria-labelledby="vaccineModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="vaccineForm">
+        <input type="hidden" name="id_pet" value="{{ $appointment->pet->id }}">
+
+        @csrf
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nueva vacuna</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="vaccine_type" class="form-label">Tipo de vacuna</label>
+                    <input type="text" class="form-control" name="vaccine_type" required>
+                </div>
+                <div class="mb-3">
+                    <label for="stamp" class="form-label">Etiqueta</label>
+                    <input type="text" class="form-control" name="stamp" required>
+                </div>
+                <div class="mb-3">
+                    <label for="batch_num" class="form-label">Número de lote</label>
+                    <textarea class="form-control" name="batch_num" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="expedition_number" class="form-label">Número de expedición</label>
+                    <input type="text" class="form-control" name="expedition_number" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Guardar vacuna</button>
             </div>
         </div>
     </form>
@@ -192,6 +255,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+
         const prescriptionForm = document.getElementById('prescriptionForm');
         prescriptionForm.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -222,6 +286,37 @@
                 }
             })
             .catch(err => console.error('Error al guardar prescripción', err));
+        });
+
+        const vaccineForm = document.getElementById('vaccineForm');
+        vaccineForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(vaccineForm);
+            fetch('{{ route('vaccine.store') }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.id) {
+                    document.getElementById('id_vaccine').value = data.id;
+                    document.getElementById('vacuna_tipo_de_vacuna').innerText = data.vaccine_type;
+                    document.getElementById('vacuna_etiqueta').innerText = data.stamp;
+                    document.getElementById('vacuna_num_lote').innerText = data.batch_num;
+                    document.getElementById('vacuna_num_expedicion').innerText = data.expedition_number;
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('vaccineModal'));
+                    modal.hide();
+                    vaccineForm.reset();
+                } else {
+                    alert('Error al guardar la vacuna');
+                }
+            })
+            .catch(err => console.error('Error al guardar la vacuna', err));
         });
 
         const invoiceForm = document.getElementById('invoiceForm');
