@@ -25,14 +25,9 @@ class AuthController extends Controller
             'address' => 'nullable|string|max:500',
             'city' => 'nullable|string|max:200|regex:/^[\pL\s\-]+$/u',
             'country' => 'nullable|string|max:200|regex:/^[\pL\s\-]+$/u',
-            'postcode' => ['nullable','string','max:20','regex:/^\d{4}$/'],
+            'postcode' => ['nullable','string','max:5'],
             'password' => ['required','string','min:8','max:200','confirmed','regex:/[a-z]/','regex:/[A-Z]/','regex:/[0-9]/',],
         ]);
-
-        //Si los datos no son correctos devolverá un error
-        if($validator->fails()){
-            return response()->json($validator->errors());
-        }
 
         //Creamos el usuario
         $user = User::create([

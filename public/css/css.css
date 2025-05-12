@@ -1,0 +1,158 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    color: #2e2e2e;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #fdfafa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: #eb6566;
+    margin-top: 0;
+}
+
+p {
+    margin-bottom: 1em;
+    font-weight: 400;
+}
+
+a {
+    color: #eb6566;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.btn-primary {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    background-color: #eb6566;
+    border-color: #eb6566;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #fcd77f;
+    border-color: #fcd77f;
+    color: #2e2e2e;
+}
+
+.btn-secondary {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    background-color: #fcd77f;
+    border-color: #fcd77f;
+    color: #2e2e2e;
+}
+
+.btn-secondary:hover {
+    background-color: #eb6566;
+    border-color: #eb6566;
+    color: #fff;
+}
+
+.btn-tertiary {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    background-color: #a8d5c2;
+    border-color: #a8d5c2;
+    color: #2e2e2e;
+}
+
+.btn-tertiary:hover {
+    background-color: #fcd77f;
+    border-color: #fcd77f;
+    color: #2e2e2e;
+}
+
+.text-link {
+    color: #eb6566;
+}
+
+.text-link:hover {
+    color: #fcd77f;
+}
+
+input, textarea, select {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+}
+
+.login-container {
+    max-width: 900px;
+    width: 100%;
+}
+
+.login-card {
+    display: flex;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    height: 500px;
+}
+
+.login-form {
+    padding: 2rem;
+    flex: 1;
+    max-width: 450px;
+}
+
+.form-label {
+    font-weight: 500;
+}
+
+.login-image {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+}
+
+.login-image img {
+    max-width: 450px;
+    height: auto;
+}
+
+/* Layouts */
+.navbar {
+    padding: 0.5rem 1rem;
+}
+
+.navbar .navbar-brand {
+    font-size: 1.5rem;
+}
+
+.navbar .d-flex {
+    align-items: center;
+}
+
+.navbar .btn {
+    text-transform: uppercase;
+}
+
+.content {
+    margin-top: 60px;
+    padding: 1rem;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .login-image {
+        display: none;
+    }
+}

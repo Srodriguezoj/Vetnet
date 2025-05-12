@@ -5,101 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ config('app.name', 'VetNet') }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('css/css.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <style>
-        body {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        .main {
-            flex: 1;
-            display: flex;
-        }
-        .sidebar {
-            width: 250px;
-            background-color: #f8f9fa;
-            padding-top: 1rem;
-            height: 100vh;
-            position: fixed;
-        }
-        .content {
-            margin-left: 250px;
-            padding: 1rem;
-            width: 100%;
-        }
-        .time-select {
-            max-height: 50px;
-            overflow-y: auto; 
-        }
-
-         .card {
-        border-radius: 10px;
-        border: 1px solid #ddd;
-    }
-
-    .card-body {
-        padding: 20px;
-        background-color: #f4f4f4;
-        border-radius: 8px;
-        
-    }
-
-    .card-body .d-flex {
-        justify-content: space-between;
-    }
-
-    .card-body .d-flex .flex-column {
-        max-width: 50%;
-    }
-
-    .card-body .d-flex .flex-column span {
-        display: block;
-    }
-
-    .btn {
-        text-transform: uppercase;
-    }
-
-    .card-body .d-flex .flex-column.align-items-end {
-        align-items: flex-end;
-    }
-    </style>
 </head>
 <body>
     <!-- Menú superior -->
-    <nav class="navbar navbar-light bg-light shadow-sm px-4">
-        <a class="navbar-brand" href="#">🐾 VetNet</a>
-        <div class="d-flex">
-            <div class="dropdown">
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                    Perfil
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
-                    <li><a class="dropdown-item" href="{{ route('client.showClient') }}">Mi perfil</a></li>
-                    <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                        @csrf
-                        <button type="submit" class="dropdown-item">Cerrar sesión</button>
-                    </form>
-                </ul>
-            </div>
+    <nav class="navbar navbar-light bg-light shadow-sm justify-content-between px-3">
+        <div class="d-flex align-items-center">
+            <a class="navbar-brand me-3" href="{{ route('client.dashboard') }}"><img src="{{ asset('images/logoText.png') }}" style="max-width:50px;" alt="VetNet Logo"></a>
+
+            <a href="{{ route('appointments.create') }}" class="btn btn-primary me-2">Pedir cita</a>
+            <a href="#" class="btn btn-tertiary me-2">Contacto</a>
+        </div>
+
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                Perfil
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+                <li><a class="dropdown-item" href="{{ route('client.showClient') }}">Mi perfil</a></li>
+                <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                    @csrf
+                    <button type="submit" class="dropdown-item">Cerrar sesión</button>
+                </form>
+            </ul>
         </div>
     </nav>
 
     <!-- Contenido principal -->
-    <div class="main">
-        <!-- Menú lateral -->
-        <aside class="sidebar border-end">
-            <ul class="nav flex-column">
-                <li class="nav-item"><a  href="{{ route('client.dashboard') }}" class="nav-link">Dashboard</a></li>
-                <li class="nav-item"><a  href="{{ route('appointments.create') }}" class="nav-link">Nueva Cita</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Historial</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Facturación</a></li>
-            </ul>
-        </aside>
-
-        <!-- Contenido dinámico -->
-        <div class="content">
+    <div class="content d-flex justify-content-center align-items-start">
+        <div class="container p-4 mt-4 mb-5 shadow rounded bg-white" style="max-width: 1000px;">
             @yield('content')
         </div>
     </div>
