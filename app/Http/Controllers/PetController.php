@@ -6,6 +6,18 @@ use Illuminate\Http\Request;
 use App\Models\Pet;
 use App\Models\User;
 use App\Http\Controllers\AuthController;
+use App\Models\Veterinary;
+use App\Models\Appointment;
+use App\Models\Prescription;
+use App\Models\MedicalRecord;
+use App\Models\PetVaccination;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
+use Validator;
+use Illuminate\Support\Facades\Auth;
+use \stdClass;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class PetController extends Controller
 {
@@ -96,7 +108,7 @@ class PetController extends Controller
 
     public function showMedicalRecords(Pet $pet)
     {
-        $medicalRecord = MedicalRecord::with('invoice.items')->findOrFail($medicalRecordId);
-        return view('medicalRecords.show', compact('medicalRecord'));
+        $medicalRecords = MedicalRecord::with('invoice.items')->where('id_pet', $pet->id)->get();
+        return view('client.showMedicalRecords', compact('pet', 'medicalRecords'));
     }
 }

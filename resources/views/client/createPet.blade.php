@@ -18,7 +18,7 @@
 
             <div class="mb-3">
                 <label for="date_of_birth" class="form-label">Fecha de Nacimiento</label>
-                <input type="datetime-local" class="form-control" id="date_of_birth" name="date_of_birth" required>
+                <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" required>
             </div>
 
             <div class="mb-3">

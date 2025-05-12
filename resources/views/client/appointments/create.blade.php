@@ -34,7 +34,7 @@
 
             <div class="form-group">
                 <label for="date">Fecha</label>
-                <input type="date" name="date" id="date" class="form-control">
+                <input type="date" name="date" id="date" class="form-control" min="{{ \Carbon\Carbon::today()->toDateString() }}">
             </div>
 
             <div class="form-group">

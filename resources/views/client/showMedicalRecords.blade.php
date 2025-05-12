@@ -3,29 +3,21 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <!-- Columna para la imagen -->
         <div class="col-md-4">
             <div class="text-center">
-                <h1 class="mb-4">
-                    Historial clínico de {{ $pet->name }}
-                    <br>
-                    <small class="text-muted">Microchip: {{ $pet->num_microchip }}</small>
-                </h1>
-                <!-- Imagen de la mascota -->
+                <h3 class="mb-4">Historial clínico de {{ $pet->name }}</h3>
                 @if($pet->species == 'Perro')
-                    <img src="{{ asset('images/perro.jpg') }}" alt="Imagen de {{ $pet->name }}" class="img-fluid rounded" style="max-width: 400px;border-radius: 8px;">
+                    <img src="{{ asset('images/perro.jpg') }}" alt="Imagen de {{ $pet->name }}" class="img-fluid rounded" style="max-width: 300px;border-radius: 8px;">
                 @elseif($pet->species == 'Gato')
-                    <img src="{{ asset('images/gato.jpg') }}" alt="Imagen de {{ $pet->name }}" class="img-fluid rounded" style="max-width: 400px;border-radius: 8px;">
+                    <img src="{{ asset('images/gato.jpg') }}" alt="Imagen de {{ $pet->name }}" class="img-fluid rounded" style="max-width: 300px;border-radius: 8px;">
                 @else
-                    <img src="{{ asset('images/huron.jpg') }}" alt="Imagen de {{ $pet->name }}" class="img-fluid rounded" style="max-width: 400px;border-radius: 8px;">
-                @endif            
+                    <img src="{{ asset('images/huron.jpg') }}" alt="Imagen de {{ $pet->name }}" class="img-fluid rounded" style="max-width: 300px;border-radius: 8px;">
+                @endif    
+                <br/><br/>
+                <h4><small class="text-muted">{{ $pet->num_microchip }}</small></h4>        
             </div>
         </div>
-
-        <!-- Columna para el historial clínico -->
         <div class="col-md-8">
-            <h1 class="mb-4">Historial clínico de {{ $pet->name }}</h1>
-
             @if ($pet->medicalRecords->isEmpty())
                 <p>No hay historial clínico registrado para esta mascota.</p>
             @else
@@ -46,8 +38,7 @@
                         </div>
                     @endforeach
                 </div>
-            @endif
-
+                @endif
             <a href="{{ route('client.dashboard') }}" class="btn btn-secondary mt-4">Volver a tus mascotas</a>
         </div>
     </div>

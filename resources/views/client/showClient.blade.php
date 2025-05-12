@@ -21,12 +21,10 @@
             <p><strong>Código Postal:</strong> {{ $user->postcode ?? 'No disponible' }}</p>
         </div>
     </div>
+    <a href="{{ route('client.editClient') }}" class="btn btn-secondary mt-3 ms-2">Editar perfil</a>
+    <a href="#" class="btn btn-tertiary mt-3 ms-2" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Cambiar Contraseña</a>
 
-    <a href="{{ route('client.dashboard') }}" class="btn btn-secondary mt-3">Volver al dashboard</a>
-    <a href="{{ route('client.editClient') }}" class="btn btn-primary mt-3 ms-2">Editar perfil</a>
-    <a href="#" class="btn btn-warning mt-3 ms-2" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Cambiar Contraseña</a>
-
-<!-- Modal para cambiar la contraseña -->
+<!-- Cambiar la contraseña -->
 <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -38,23 +36,19 @@
                 <form action="{{ route('client.updatePassword') }}" method="POST">
                     @csrf
                     @method('PUT')
-
                     <div class="mb-3">
                         <label for="current_password" class="form-label">Contraseña Actual</label>
                         <input type="password" name="current_password" id="current_password" class="form-control" required>
                     </div>
-
                     <div class="mb-3">
                         <label for="new_password" class="form-label">Nueva Contraseña</label>
                         <input type="password" name="new_password" id="new_password" class="form-control" required>
                     </div>
-
                     <div class="mb-3">
                         <label for="new_password_confirmation" class="form-label">Confirmar Nueva Contraseña</label>
                         <input type="password" name="new_password_confirmation" id="new_password_confirmation" class="form-control" required>
                     </div>
-
-                    <button type="submit" class="btn btn-primary">Cambiar Contraseña</button>
+                    <button type="submit" class="btn btn-tertiary">Cambiar Contraseña</button>
                 </form>
             </div>
         </div>
