@@ -66,6 +66,7 @@ Route::middleware(['auth', 'role:Cliente'])->group(function () {
 
     //Descara de documentos
     Route::get('/prescription/{id}/download', [PrescriptionController::class, 'download'])->name('prescription.download');
+    Route::get('/invoice/{invoice}/download', [InvoiceController::class, 'download'])->name('invoice.download');
 });
 
 //Rutas solo accesibles para Admin y Veterinarios

@@ -96,6 +96,7 @@ class PetController extends Controller
 
     public function showMedicalRecords(Pet $pet)
     {
-        return view('client.showMedicalRecords', compact('pet'));
+        $medicalRecord = MedicalRecord::with('invoice.items')->findOrFail($medicalRecordId);
+        return view('medicalRecords.show', compact('medicalRecord'));
     }
 }

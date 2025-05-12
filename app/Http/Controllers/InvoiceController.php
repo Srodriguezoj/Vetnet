@@ -135,4 +135,11 @@ class InvoiceController extends Controller
         $invoice->save();
         return redirect()->route('veterinary.showInvoices')->with('success', 'Estado de la factura actualizado.');
     }
+
+    public function download($invoiceId)
+    {
+        $invoice = Invoice::findOrFail($invoiceId);
+        $pdf = \PDF::loadView('pdf.invoice', compact('invoice'));
+        return $pdf->download('factura_' . $invoice->id . '.pdf');
+    }
 }
