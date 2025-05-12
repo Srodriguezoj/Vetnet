@@ -9,6 +9,7 @@ use App\Models\Pet;
 use App\Models\Appointment;
 use App\Models\Prescription;
 use App\Models\MedicalRecord;
+use App\Models\PetVaccination;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Validator;
@@ -50,6 +51,7 @@ class MedicalRecordController extends Controller
             'diagnosis' => 'required|string',
             'id_prescription' => 'nullable|exists:prescriptions,id',
             'id_invoice' => 'nullable|exists:invoices,id',
+            'id_vaccine' => 'nullable|exists:vaccines,id',
         ]);
 
         // Crear el historial médico
@@ -59,6 +61,16 @@ class MedicalRecordController extends Controller
         $appointment = Appointment::find($request->id_appointment);
         $appointment->state = 'Completada';
         $appointment->save();
+
+        //Se guarda la vacuna de la mascota
+        if ($request->filled('id_vaccine')) {
+        PetVaccination::create([
+            'id_pet' => $validated['id_pet'],
+            'id_vaccine' => $validated['id_vaccine'],
+            'id_medical_record' => $medicalRecord->id,
+            'date_administered' => Carbon::now()->toDateString(),
+        ]);
+    }
 
         // Redirigir al dashboard o donde sea necesario
         return redirect()->route('veterinary.dashboard')->with('success', 'Historial médico creado correctamente.');
