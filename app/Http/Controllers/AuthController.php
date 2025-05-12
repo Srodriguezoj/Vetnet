@@ -16,18 +16,18 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         //Validamos los datos que nos llegan de la petición
-       $validator = Validator::make($request->all(), [
-        'name' => 'required|string|max:255',
-        'surname' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users',
-        'dni' => 'required|string|max:15|unique:users',
-        'phone' => 'nullable|string|max:20',
-        'address' => 'nullable|string|max:255',
-        'city' => 'nullable|string|max:100',
-        'country' => 'nullable|string|max:100',
-        'postcode' => 'nullable|string|max:10',
-        'password' => 'required|string|min:8|confirmed',
-    ]);
+       $request->validate([
+            'name' => 'required|string|max:100|regex:/^[\pL\s\-]+$/u',
+            'surname' => 'required|string|max:250|regex:/^[\pL\s\-]+$/u',
+            'email' => 'required|string|email|max:200|unique:users',
+            'dni' => ['required','string','max:15','unique:users','regex:/^\d{8}[A-Za-z]$/'],
+            'phone' => ['nullable','string','max:20','regex:/^\d{9}$/'],
+            'address' => 'nullable|string|max:500',
+            'city' => 'nullable|string|max:200|regex:/^[\pL\s\-]+$/u',
+            'country' => 'nullable|string|max:200|regex:/^[\pL\s\-]+$/u',
+            'postcode' => ['nullable','string','max:20','regex:/^\d{4}$/'],
+            'password' => ['required','string','min:8','max:200','confirmed','regex:/[a-z]/','regex:/[A-Z]/','regex:/[0-9]/',],
+        ]);
 
         //Si los datos no son correctos devolverá un error
         if($validator->fails()){
@@ -82,6 +82,7 @@ class AuthController extends Controller
         // Guardamos el token en la sesión
         session(['token' => $token]);
 
+        //Redirigimos a la pantalla según el tipo de usuario
         if($user->role === User::ROLE_CLIENT){
             return redirect()->route('client.dashboard');
         }else if($user->role === User::ROLE_ADMIN || $user->role === User::ROLE_VET){

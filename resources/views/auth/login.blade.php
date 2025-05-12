@@ -1,49 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VetNet</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            margin-top:10%;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        .main {
-            flex: 1;
-            display: flex;
-        }
-        .sidebar {
-            width: 250px;
-            background-color: #f8f9fa;
-            padding-top: 1rem;
-            height: 100vh;
-            position: fixed;
-        }
-        .content {
-            margin-left: 250px;
-            padding: 1rem;
-            width: 100%;
-        }
-        .btn-primary{
-            display:block;
-            width: 200px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">{{ __('Login') }}</div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Vetnet</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+    </head>
+    <body>
+        <div class="login-container">
+            <div class="login-card">
 
-                    <div class="card-body">
+                <!-- Iniciar sesión -->
+                <div class="login-form d-flex align-items-center">
+                    <div class="w-100">
+                        <h3 class="text-center mb-4">Iniciar sesión</h3>
                         <form method="POST" action="{{ route('login.post') }}">
                             @csrf
 
@@ -63,12 +35,18 @@
                                 @enderror
                             </div>
 
-                            <button type="submit" class="btn btn-primary">{{ __('Login') }}</button>
-                            <a href="{{ route('register') }}" class="btn btn-link mt-2 d-block text-center">{{ __('¿No tienes cuenta? Regístrate') }}</a>
+                            <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
+                            <a href="{{ route('register') }}" class="btn btn-link mt-2 d-block text-center text-link">{{ __('¿No tienes cuenta? Regístrate') }}</a>
                         </form>
                     </div>
                 </div>
+
+                <!-- Imagen -->
+                <div class="login-image d-none d-md-flex">
+                    <img src="{{ asset('images/logoText.png') }}" alt="VetNet Logo">
+                </div>
+                
             </div>
         </div>
-    </div>
-</body>
+    </body>
+</html>
