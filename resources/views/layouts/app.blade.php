@@ -60,7 +60,7 @@
         <aside class="sidebar border-end">
             <ul class="nav flex-column">
                 <li class="nav-item"><a  href="{{ route('client.dashboard') }}" class="nav-link">Dashboard</a></li>
-                <li class="nav-item"><a  href="{{ route('appointments.create') }}" class="nav-link">Citas</a></li>
+                <li class="nav-item"><a  href="{{ route('appointments.create') }}" class="nav-link">Nueva Cita</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Historial</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Facturación</a></li>
             </ul>

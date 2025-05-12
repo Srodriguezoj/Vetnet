@@ -76,13 +76,6 @@ class MedicalRecordController extends Controller
         return redirect()->route('veterinary.dashboard')->with('success', 'Historial médico creado correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -106,5 +99,10 @@ class MedicalRecordController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function show(MedicalRecord $medicalRecord)
+    {
+        return view('client.showMedicalRecord', compact('medicalRecord'));
     }
 }

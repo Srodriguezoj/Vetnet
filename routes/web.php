@@ -60,6 +60,9 @@ Route::middleware(['auth', 'role:Cliente'])->group(function () {
     Route::post('/appointments/checkAvailability', [AppointmentController::class, 'checkAvailability'])->name('appointments.checkAvailability');
     Route::delete('/appointments/{appointment}', [AppointmentController::class, 'destroy'])->name('appointments.destroy');
 
+    //Historial clinico
+    Route::get('/pets/{pet}/medicalRecords', [PetController::class, 'showMedicalRecords'])->name('client.showMedicalRecords');
+    Route::get('/medical-records/{medicalRecord}', [MedicalRecordController::class, 'show'])->name('medicalRecords.show');
 });
 
 //Rutas solo accesibles para Admin y Veterinarios

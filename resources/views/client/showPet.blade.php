@@ -34,22 +34,14 @@
                 </div>
             </div>
 
-            <h5>Historial médico</h5>
-            @if ($pet->medicalRecords->isEmpty())
-                <p>No se ha registrado historial médico para esta mascota.</p>
-            @else
-                <ul>
-                    @foreach ($pet->medicalRecords as $record)
-                        <li>
-                            <strong>{{ \Carbon\Carbon::parse($record->date)->format('d/m/Y') }}:</strong>
-                            {{ $record->description }}
-                        </li>
-                    @endforeach
-                </ul>
-            @endif
-
-            <a href="{{ route('client.dashboard') }}" class="btn btn-secondary mt-3">Volver a tus mascotas</a>
+            <a href="{{ route('client.dashboard') }}" class="btn btn-secondary mt-3 me-2">Volver a tus mascotas</a>
             <a href="{{ route('pets.editPet', ['pet' => $pet->id]) }}" class="btn btn-primary mt-3">Editar mascota</a>
+
+            <div class="mt-3">
+               <a href="{{ route('client.showMedicalRecords', ['pet' => $pet->id]) }}" class="btn btn-info w-100">
+                    Consultar historial clínico
+                </a>
+            </div>
         </div>
 
         <!-- Columna derecha: Citas -->
