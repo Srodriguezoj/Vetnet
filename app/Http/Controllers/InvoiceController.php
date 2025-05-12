@@ -122,4 +122,17 @@ class InvoiceController extends Controller
     {
         //
     }
+
+    public function changeState(Request $request, $invoiceId)
+    {
+        $invoice = Invoice::findOrFail($invoiceId);
+
+        $validated = $request->validate([
+            'status' => 'required|in:Pendiente,Pagada,Anulada',
+        ]);
+
+        $invoice->status = $validated['status'];
+        $invoice->save();
+        return redirect()->route('veterinary.showInvoices')->with('success', 'Estado de la factura actualizado.');
+    }
 }

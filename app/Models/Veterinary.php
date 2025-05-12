@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Invoice;
+use App\Models\User;
+use App\Models\Veterinary;
+
 
 class Veterinary extends Model
 {
@@ -34,4 +38,5 @@ class Veterinary extends Model
     {
         return $this->hasMany(MedicalRecord::class, 'id_veterinary');
     }
+
 }

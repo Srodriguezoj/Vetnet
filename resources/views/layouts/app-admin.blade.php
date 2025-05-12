@@ -57,11 +57,13 @@
         <aside class="sidebar border-end">
             <ul class="nav flex-column">
                 <li class="nav-item"><a  href="{{ route('veterinary.dashboard') }}" class="nav-link">Dashboard</a></li>
-                 @if(auth()->user()->role == 'Admin')
+                @if(auth()->user()->role == 'Admin')
                     <li class="nav-item"><a  href="{{ route('veterinary.showVeterinaries') }}" class="nav-link">Veterinarios</a></li>
                 @endif 
                <li class="nav-item"><a href="{{ route('veterinary.showDates') }}" class="nav-link">Citas</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Facturación</a></li>
+               @if(auth()->user()->role == 'Admin')
+                    <li class="nav-item"><a  href="{{ route('veterinary.showInvoices') }}" class="nav-link">Facturas</a></li>
+               @endif 
             </ul>
         </aside>
 

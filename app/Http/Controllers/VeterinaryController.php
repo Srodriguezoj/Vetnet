@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Veterinary;
 use App\Models\Appointment;
+use App\Models\Invoice;
 use App\Http\Controllers\AppointmentController;
 use Illuminate\Support\Facades\Hash;
 use Validator;
@@ -77,5 +78,11 @@ class VeterinaryController extends Controller
        $appointments = Appointment::where('id_veterinary', $veterinary->id)->with('pet.owner')->get();
 
         return view('veterinary.showDates', compact('appointments'));
+    }
+
+    public function showInvoices()
+    {
+        $invoices = Invoice::with('veterinary.user')->get();
+        return view('veterinary.showInvoices', compact('invoices'));
     }
 }
