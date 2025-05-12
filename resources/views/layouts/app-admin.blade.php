@@ -60,7 +60,13 @@
                 @if(auth()->user()->role == 'Admin')
                     <li class="nav-item"><a  href="{{ route('veterinary.showVeterinaries') }}" class="nav-link">Veterinarios</a></li>
                 @endif 
-               <li class="nav-item"><a href="{{ route('veterinary.showDates') }}" class="nav-link">Citas</a></li>
+
+                @if(auth()->user()->role == 'Veterinario')
+                    <li class="nav-item"><a href="{{ route('veterinary.showDates') }}" class="nav-link">Citas</a></li>
+                @elseif(auth()->user()->role = 'Admin')
+                    <li class="nav-item"><a href="{{ route('veterinary.showAllDates') }}" class="nav-link">Citas</a></li>
+                @endif 
+               
                @if(auth()->user()->role == 'Admin')
                     <li class="nav-item"><a  href="{{ route('veterinary.showInvoices') }}" class="nav-link">Facturas</a></li>
                @endif 

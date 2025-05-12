@@ -103,6 +103,7 @@ Route::middleware(['auth'])->group(function () {
         //Mostrar facturas
        Route::get('/invoices', [VeterinaryController::class, 'showInvoices'])->name('veterinary.showInvoices');
        Route::post('/invoice/{invoice}/changeState', [InvoiceController::class, 'changeState'])->name('invoice.changeState');
+       Route::get('/veterinary/dates', [VeterinaryController::class, 'showAllDates'])->name('veterinary.showAllDates');
     });
 
     

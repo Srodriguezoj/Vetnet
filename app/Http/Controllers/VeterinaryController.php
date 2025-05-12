@@ -85,4 +85,9 @@ class VeterinaryController extends Controller
         $invoices = Invoice::with('veterinary.user')->get();
         return view('veterinary.showInvoices', compact('invoices'));
     }
+    public function showAllDates()
+    {
+        $appointments = Appointment::all(); 
+        return view('veterinary.showAllDates', compact('appointments'));
+    }
 }
