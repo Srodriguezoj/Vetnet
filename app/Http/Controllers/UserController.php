@@ -38,16 +38,14 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Funcion para mostrar la informacion del usuario por roles
      */
     public function show()
     {
         $user = Auth::user();
-
         if ($user->hasRole('Cliente')) {
             return view('client.showClient', compact('user'));
         }
-
         if ($user->role == 'Admin' || $user->role == 'Veterinario') {
             return view('veterinary.showProfile', compact('user'));
         }
@@ -56,16 +54,14 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Funcion para mostrar el formulario de edicion del usuario
      */
     public function edit()
     {
         $user = Auth::user();
-
         if ($user->hasRole('Cliente')) {
             return view('client.editClient', compact('user'));
         }
-
         if ($user->role == 'Admin' || $user->role == 'Veterinario') {
             return view('veterinary.editProfile', compact('user'));
         }
@@ -74,11 +70,11 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Funcion para editar usuario
      */
     public function update(Request $request)
     {
-            $validated = $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:100',
             'surname' => 'required|string|max:250',
             'email' => 'email|max:200|unique:users,email,' . auth()->id(),
@@ -88,32 +84,29 @@ class UserController extends Controller
             'country' => 'nullable|string|max:200',
             'postcode' => 'nullable|string|max:20',
         ]);
-
         $user = auth()->user();
         $user->update($validated);
-
         if ($user->hasRole('Cliente')) {
-            return redirect()->route('client.showClient')->with('success', 'Perfil actualizado con éxito');
+            return redirect()->route('client.showClient')->with('success', 'Perfil actualizado');
         }
-
         if ($user->role == 'Admin' || $user->role == 'Veterinario') {
-            return redirect()->route('veterinary.showProfile')->with('success', 'Perfil actualizado con éxito');
+            return redirect()->route('veterinary.showProfile')->with('success', 'Perfil actualizado');
         }
-
         abort(403);
     }
 
+    /**
+     * Funcion para modificar la contraseña
+     */
     public function updatePassword(Request $request)
     {
         $request->validate([
             'current_password' => 'required',
             'new_password' => 'required|min:8|confirmed',
         ]);
-
         if (!Hash::check($request->current_password, auth()->user()->password)) {
-            return back()->withErrors(['current_password' => 'La contraseña actual no es válida.']);
+            return back()->withErrors(['current_password' => 'La no contraseña válida.']);
         }
-
         auth()->user()->update([
             'password' => Hash::make($request->new_password),
         ]);
@@ -121,11 +114,11 @@ class UserController extends Controller
         $user = auth()->user(); 
 
         if ($user->role == 'Cliente') {
-            return redirect()->route('client.showClient')->with('success', 'Perfil actualizado con éxito');
+            return redirect()->route('client.showClient')->with('success', 'Perfil actualizado');
         }
 
         if ($user->role == 'Admin' || $user->role == 'Veterinario') {
-           return redirect()->route('veterinary.showProfile')->with('success', 'Contraseña actualizada correctamente.');
+           return redirect()->route('veterinary.showProfile')->with('success', 'Contraseña actualizada.');
         }
 
         
@@ -139,14 +132,16 @@ class UserController extends Controller
         //
     }
 
-
+    /**
+     * Funcion para mostra las masotas de un usuario 'Cliente'
+     */
    public function showPets()
     {
         if (auth()->user()->role !== 'Cliente') {
             abort(403);
         }
-
         $pets = auth()->user()->pets;
+        
         return view('client.dashboard', compact('pets'));
     }
 

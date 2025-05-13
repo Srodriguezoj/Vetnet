@@ -39,19 +39,14 @@ class PrescriptionController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Crea una nueva prescripcion
      */
     public function store(Request $request)
     {
         $prescription = Prescription::create($request->all());
 
-        return response()->json([
-            'id' => $prescription->id,
-            'medication' => $prescription->medication,
-            'dosage' => $prescription->dosage,
-            'instructions' => $prescription->instructions,
-            'duration' => $prescription->duration,
-        ]);
+        return response()->json(['id' => $prescription->id,'medication' => $prescription->medication,'dosage' => $prescription->dosage,
+        'instructions' => $prescription->instructions,'duration' => $prescription->duration,]);
     }
 
     /**
@@ -86,17 +81,16 @@ class PrescriptionController extends Controller
         //
     }
 
+    /**
+     * Permite descargar una prescripcion en formato PDF
+     */
     public function download($id)
     {
         $prescription = Prescription::with('medicalRecord.pet.owner')->findOrFail($id);
-
         $pet = $prescription->medicalRecord->pet ?? null;
         $owner = $pet->owner ?? null;
 
-        return Pdf::loadView('pdf.prescription', [
-            'prescription' => $prescription,
-            'pet' => $pet,
-            'owner' => $owner,
-        ])->download('prescripcion_' . $prescription->id . '.pdf');
+        return Pdf::loadView('pdf.prescription', ['prescription' => $prescription,'pet' => $pet,'owner' => $owner,])
+        ->download('prescripcion_' . $prescription->id . '.pdf');
     }
 }

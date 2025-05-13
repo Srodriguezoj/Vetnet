@@ -18,7 +18,7 @@ class Prescription extends Model
         'duration',
     ];
 
-    // Relación inversa el id de la tabla MedicalRecord
+    // Relación del id de la tabla MedicalRecord
     public function medicalRecord()
     {
         return $this->hasOne(MedicalRecord::class, 'id_prescription');

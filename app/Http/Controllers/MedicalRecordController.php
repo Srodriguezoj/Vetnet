@@ -30,20 +30,20 @@ class MedicalRecordController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Funcion para mostrar el formulario para crear un neuvo registro 
      */
     public function create($appointmentId)
     {
         $appointment = Appointment::with('pet', 'pet.owner')->findOrFail($appointmentId);
+
         return view('veterinary.createMedicalRecord', compact('appointment'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Crea un nuevo registro en el historial clinico de x mascota
      */
     public function store(Request $request)
     {
-        // Validar los datos del formulario
         $validated = $request->validate([
             'id_pet' => 'required|exists:pets,id',
             'id_veterinary' => 'required|exists:veterinaries,id',
@@ -53,16 +53,11 @@ class MedicalRecordController extends Controller
             'id_invoice' => 'nullable|exists:invoices,id',
             'id_vaccine' => 'nullable|exists:vaccines,id',
         ]);
-
-        // Crear el historial médico
         $medicalRecord = new MedicalRecord($validated);
         $medicalRecord->save();
-
         $appointment = Appointment::find($request->id_appointment);
         $appointment->state = 'Completada';
         $appointment->save();
-
-        //Se guarda la vacuna de la mascota
         if ($request->filled('id_vaccine')) {
         PetVaccination::create([
             'id_pet' => $validated['id_pet'],
@@ -71,8 +66,6 @@ class MedicalRecordController extends Controller
             'date_administered' => Carbon::now()->toDateString(),
         ]);
     }
-
-        // Redirigir al dashboard o donde sea necesario
         return redirect()->route('veterinary.showDates')->with('success', 'Historial médico creado correctamente.');
     }
 
@@ -101,6 +94,9 @@ class MedicalRecordController extends Controller
         //
     }
 
+    /**
+     * Muestra el historal clinico de una mascota
+     */
     public function show(MedicalRecord $medicalRecord)
     {
         return view('client.showMedicalRecord', compact('medicalRecord'));

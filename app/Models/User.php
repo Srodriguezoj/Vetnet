@@ -59,6 +59,7 @@ class User extends Authenticatable
         ];
     }
 
+    //Para recupera el rol de los usuarios
     public function hasRole($role)
     {
         return $this->role === $role;

@@ -40,17 +40,13 @@ class VaccineController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Funcion para guardar una nueva vacuna
      */
     public function store(Request $request)
     {
        $vacine = Vaccine::create($request->all());
 
-        return response()->json([
-            'id' => $vacine->id,
-            'vaccine_type' => $vacine->vaccine_type,
-            'stamp' => $vacine->stamp,
-            'batch_num' => $vacine->batch_num,
+        return response()->json(['id' => $vacine->id,'vaccine_type' => $vacine->vaccine_type,'stamp' => $vacine->stamp,'batch_num' => $vacine->batch_num,
             'expedition_number' => $vacine->expedition_number,
         ]);
     }

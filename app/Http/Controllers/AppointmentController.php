@@ -35,7 +35,7 @@ class AppointmentController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Crea una nueva cita
      */
     public function store(Request $request)
     {
@@ -94,32 +94,34 @@ class AppointmentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Cambia el estado de la cita a 'Cancelada'
      */
     public function destroy(string $id)
     {
         $appointment = Appointment::findOrFail($id);
         $petId = $appointment->id_pet;
-
         $appointment->state = 'Cancelada';  
         $appointment->save(); 
 
         return redirect()->route('client.showPet', ['pet' => $petId])->with('success', 'La cita ha sido cancelada correctamente.');
     }
 
+    /**
+     * Funcion para mostrar el formulario para crear la cita
+     */
     public function showForm()
     {
         $user = Auth::user();
-
         $pets = Pet::where('id_owner', Auth::id())->get();
         $specialties = ['Interna', 'Cirugia', 'Dermatologia', 'Odontologia', 'Cardiologia', 'Preventiva', 'Etologia'];
 
-        return view('client.appointments.create', [
-            'pets' => $pets,
-            'specialties' => $specialties,
-        ]);
+        return view('client.appointments.create', ['pets' => $pets, 'specialties' => $specialties,]);
     }
     
+    /**
+     * Función para comprobar si los veterianrios están disponibles en x dia y x hora
+     * que se pasa por parametro en la request
+     */
     public function checkAvailability(Request $request)
     {
         $request->validate([
@@ -131,13 +133,11 @@ class AppointmentController extends Controller
         $specialty = $request->specialty;
         $date = $request->date;
         $time = $request->time;
-
         $veterinarians = Veterinary::whereHas('appointments', function ($query) use ($specialty, $date, $time) {
             $query->where('specialty', $specialty)
                 ->where('date', $date)
                 ->where('time', $time);
         })->pluck('id');
-
         $availableVeterinarians = Veterinary::where('specialty', $specialty)
             ->whereNotIn('id', $veterinarians)
             ->with('user')
@@ -148,15 +148,18 @@ class AppointmentController extends Controller
                     'name' => $vet->user->name . ' ' . $vet->user->surname,
                 ];
             });
+
         return response()->json($availableVeterinarians);
     }
 
+    /**
+     * Cambia el estado de la cita
+     */
     public function updateState(Appointment $appointment, $state)
     {
         if (!in_array($state, ['Confirmada', 'Cancelada'])) {
             return redirect()->back()->with('error', 'Estado no válido');
         }
-
         $appointment->state = $state;
         $appointment->save();
 

@@ -21,14 +21,19 @@ use Illuminate\Support\Facades\Log;
 
 class PetController extends Controller
 {
+    /**
+     * Muestra el formulario para crear una mascota
+     */
     public function create()
     {
         return view('pets.createPet');  
     }
 
+    /**
+     * Funcion para crear una nueva mascota
+     */
     public function store(Request $request)
     {
-        
         $request->validate([
             'name' => 'required|string|max:100',
             'num_microchip' => 'required|string|max:15|unique:pets',
@@ -41,8 +46,6 @@ class PetController extends Controller
             'size' => 'required|in:Grande,Mediano,Pequeño',
             'weight' => 'required|numeric',
         ]);
-
-        
         Pet::create([
             'id_owner' => auth()->id(),
             'num_microchip' => $request->num_microchip,
@@ -61,12 +64,19 @@ class PetController extends Controller
         return redirect()->route('client.dashboard')->with('success', 'Mascota registrada exitosamente');
     }
 
+    /**
+     * Funcion para mostra el formulario de editar una mascota
+     */
     public function edit($petId)
     {
         $pet = Pet::findOrFail($petId);
+
         return view('client.editPet', compact('pet'));
     }
 
+    /**
+     * Funcion para editar una mascota
+     */
     public function update(Request $request, $petId)
     {
         $validated = $request->validate([
@@ -81,9 +91,7 @@ class PetController extends Controller
             'size' => 'nullable|string|max:50',
             'weight' => 'nullable|numeric',
         ]);
-
         $pet = Pet::findOrFail($petId);
-
         $pet->update([
             'num_microchip' => $request->num_microchip,
             'name' => $request->name,
@@ -100,15 +108,23 @@ class PetController extends Controller
         return redirect()->route('client.showPet', ['pet' => $pet->id])->with('success', 'Información de la mascota actualizada correctamente.');
     }
 
+    /**
+     * Funcion para mostrar la informacion de una mascota
+     */
     public function show($id)
     {
         $pet = Pet::with(['medicalRecords', 'appointments'])->findOrFail($id);
+
         return view('client.showPet', compact('pet'));
     }
 
+    /**
+     * Funcion para mostrar el historial clinico de una mascota
+     */
     public function showMedicalRecords(Pet $pet)
     {
         $medicalRecords = MedicalRecord::with('invoice.items')->where('id_pet', $pet->id)->get();
+
         return view('client.showMedicalRecords', compact('pet', 'medicalRecords'));
     }
 }

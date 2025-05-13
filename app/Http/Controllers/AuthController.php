@@ -12,10 +12,12 @@ use \stdClass;
 
 class AuthController extends Controller
 {
-    //Registro de usuario
+    /**
+     * Registra un nuevo usuario por defecto esto solo sirve para
+     * los clientes que se registren ellos mismos
+     */
     public function register(Request $request)
     {
-        //Validamos los datos que nos llegan de la petición
        $request->validate([
             'name' => 'required|string|max:100|regex:/^[\pL\s\-]+$/u',
             'surname' => 'required|string|max:250|regex:/^[\pL\s\-]+$/u',
@@ -29,7 +31,6 @@ class AuthController extends Controller
             'password' => ['required','string','min:8','max:200','confirmed','regex:/[a-z]/','regex:/[A-Z]/','regex:/[0-9]/',],
         ]);
 
-        //Creamos el usuario
         $user = User::create([
             'name' => $request->name,
             'surname' => $request->surname,
@@ -45,8 +46,6 @@ class AuthController extends Controller
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
-
-        // Guardamos el token en la sesión
         session(['token' => $token]);
 
         if($user->role === User::ROLE_CLIENT){
@@ -60,26 +59,18 @@ class AuthController extends Controller
         }
     }
 
-
-    //login de usuario
+    /**
+     * Funcion de login donde segun el rol redirige a una ruta u otra
+     */
     public function login(Request $request){
 
-        //Si el email o el password no son correctos...
         if(!Auth::attempt($request->only('email', 'password'))){
-            //Se envia una respuesta informaco de que no estamos autorizados
             return back()->withErrors(['email' => 'Email o contraseña incorrectos']);
         }
-
-        //Si la autenticación ha tenido éxito, se busca al usuario en la BBDD
         $user = User::where('email', $request['email'])->firstOrFail();
-
-        //Se crea el token para la sesión
         $token = $user->createToken('auth_token')->plainTextToken;
-
-        // Guardamos el token en la sesión
         session(['token' => $token]);
 
-        //Redirigimos a la pantalla según el tipo de usuario
         if($user->role === User::ROLE_CLIENT){
             return redirect()->route('client.dashboard');
         }else if($user->role === User::ROLE_VET){
@@ -91,14 +82,15 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * Funcion de logout para todos los usuarios
+     */
     public function logout(){
-        // Borramos todos los tokens del usuario
         auth()->user()->tokens()->delete();
-         // Limpiamos la sesión
         session()->flush();
+
         return redirect()->route('login');
     }
-
 
 
 }

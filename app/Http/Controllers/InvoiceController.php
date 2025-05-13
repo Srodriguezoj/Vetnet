@@ -39,23 +39,17 @@ class InvoiceController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Crea una nueva factura
      */
     public function store(Request $request)
     {
         $data = $request->all();
-
-        // Decodificar 'items' si es JSON
         $decodedItems = json_decode($request->input('items'), true);
 
         if (!is_array($decodedItems)) {
             return response()->json(['message' => 'Formato de ítems inválido'], 400);
         }
-
-        // Inyectar items decodificados en el array de validación
         $request->merge(['items' => $decodedItems]);
-
-        // Validación
         $validated = $request->validate([
             'id_client' => 'required|exists:users,id',
             'id_veterinary' => 'required|exists:veterinaries,id',
@@ -67,19 +61,13 @@ class InvoiceController extends Controller
             'tax_percentage' => 'required|numeric',
             'total_with_tax' => 'required|numeric',
         ]);
-
-        // Crear la factura
         $invoice = new Invoice($validated);
         $invoice->save();
-
-        // Crear los ítems de la factura
         foreach ($validated['items'] as $itemData) {
             $item = new InvoiceItem($itemData);
             $item->id_invoice = $invoice->id;
             $item->save();
         }
-
-        // Obtener los ítems recién creados para incluirlos en la respuesta
         $invoiceItems = InvoiceItem::where('id_invoice', $invoice->id)->get();
 
         return response()->json([
@@ -123,23 +111,29 @@ class InvoiceController extends Controller
         //
     }
 
+    /**
+     * Cambia el estado de una factura
+     */
     public function changeState(Request $request, $invoiceId)
     {
         $invoice = Invoice::findOrFail($invoiceId);
-
         $validated = $request->validate([
             'status' => 'required|in:Pendiente,Pagada,Anulada',
         ]);
-
         $invoice->status = $validated['status'];
         $invoice->save();
+
         return redirect()->route('veterinary.showInvoices')->with('success', 'Estado de la factura actualizado.');
     }
 
+    /**
+     * Permite descargar una factura en formato pdf
+     */
     public function download($invoiceId)
     {
         $invoice = Invoice::findOrFail($invoiceId);
         $pdf = \PDF::loadView('pdf.invoice', compact('invoice'));
+
         return $pdf->download('factura_' . $invoice->id . '.pdf');
     }
 }
