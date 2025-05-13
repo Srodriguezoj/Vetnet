@@ -49,7 +49,7 @@
             </div>
             <div class="form-group">
                 <label for="description">Descripción</label>
-                <textarea name="description" id="description" class="form-control"></textarea>
+                <input type="text" name="description" id="description" maxlength="200" class="form-control" required>
             </div>
             <br/>
             <button type="submit" class="btn btn-primary">Reservar Cita</button>

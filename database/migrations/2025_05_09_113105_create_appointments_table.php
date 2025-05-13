@@ -17,8 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('id_veterinary');
             $table->date('date');
             $table->time('time');
-            $table->string('title', 200);
-            $table->text('description');
+            $table->string('title', 100);
+            $table->string('description', 200);
             $table->enum('state', ['Pendiente', 'Confirmada', 'Cancelada', 'Completada']);
             $table->enum('specialty', ['Interna', 'Cirugia', 'Dermatologia', 'Odontologia', 'Cardiologia', 'Preventiva', 'Etologia']);
             $table->timestamps(3);

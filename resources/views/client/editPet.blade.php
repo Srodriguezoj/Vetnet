@@ -13,7 +13,7 @@
             </div>
             <div class="form-group">
                 <label for="num_microchip">Número de Microchip</label>
-                <input type="text" class="form-control" id="num_microchip" name="num_microchip" value="{{ old('num_microchip', $pet->num_microchip) }}" maxlength="50">
+                <input type="text" class="form-control" id="num_microchip" name="num_microchip" maxlength="15" required value="{{ old('num_microchip', $pet->num_microchip) }}" maxlength="50">
             </div>
             <div class="form-group">
                 <label for="date_of_birth">Fecha de Nacimiento</label>
@@ -37,15 +37,15 @@
             </div>
             <div class="form-group">
                 <label for="breed">Raza</label>
-                <input type="text" class="form-control" id="breed" name="breed" value="{{ old('breed', $pet->breed) }}" maxlength="100">
+                <input type="text" class="form-control" id="breed" name="breed" required value="{{ old('breed', $pet->breed) }}" maxlength="100">
             </div>
             <div class="form-group">
                 <label for="colour">Color</label>
-                <input type="text" class="form-control" id="colour" name="colour" value="{{ old('colour', $pet->colour) }}" maxlength="50">
+                <input type="text" class="form-control" id="colour" name="colour" required value="{{ old('colour', $pet->colour) }}" maxlength="50">
             </div>
             <div class="form-group">
                 <label for="coat">Pelaje</label>
-                <input type="text" class="form-control" id="coat" name="coat" value="{{ old('coat', $pet->coat) }}" maxlength="50">
+                <input type="text" class="form-control" id="coat" name="coat" required value="{{ old('coat', $pet->coat) }}" maxlength="50">
             </div>
             <div class="form-group">
                 <label for="size">Tamaño</label>

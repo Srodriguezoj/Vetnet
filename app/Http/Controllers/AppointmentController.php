@@ -45,8 +45,8 @@ class AppointmentController extends Controller
                 'specialty' => 'required|string|in:Interna,Cirugia,Dermatologia,Odontologia,Cardiologia,Preventiva,Etologia',
                 'date' => 'required|date',
                 'time' => 'required|date_format:H:i',
-                'title' => 'required|string|max:200',
-                'description' => 'required|string',
+                'title' => 'required|string|max:100',
+                'description' => 'required|string|max:200',
             ]);
         
         try {

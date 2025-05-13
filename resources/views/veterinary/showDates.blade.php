@@ -22,6 +22,7 @@
                             <th>Dueño</th>
                             <th>Mascota</th>
                             <th>Motivo</th>
+                            <th>Descripción</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
@@ -32,8 +33,12 @@
                                 <td>{{ \Carbon\Carbon::parse($appointment->date)->format('d/m/Y') }}</td>
                                 <td>{{ $appointment->time }}</td>
                                 <td>{{ $appointment->pet->owner->name ?? 'Sin dueño' }}</td>
-                                <td>{{ $appointment->pet->name ?? 'Sin nombre' }}</td>
+
+                                <td><a href="{{ route('veterinary.showPet', ['pet' =>  $appointment->pet->id]) }}">{{ $appointment->pet->name ?? 'Sin nombre' }}</a></td>
+
                                 <td>{{ $appointment->title }}</td>
+
+                                <td>{{ $appointment->description }}</td>
                                 <td>{{ $appointment->state }}</td>
                                 <td>
                                     @if ($appointment->state == 'Pendiente')
