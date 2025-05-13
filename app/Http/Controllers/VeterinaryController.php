@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Veterinary;
 use App\Models\Appointment;
 use App\Models\Invoice;
+use App\Models\Pet;
 use App\Http\Controllers\AppointmentController;
 use Illuminate\Support\Facades\Hash;
 use Validator;
@@ -107,5 +108,35 @@ class VeterinaryController extends Controller
         $appointments = Appointment::all(); 
         
         return view('veterinary.showAllDates', compact('appointments'));
+    }
+     /**
+     * Funcion para mostrar todas las mascotas del programa
+     */
+    public function showAllPets()
+    {
+        $pets = Pet::all(); 
+        return view('veterinary.showPets', compact('pets'));
+    }
+    /**
+     * Funcion para mostrar una mascota
+     */
+     public function showPet(Pet $pet)
+    {
+        return view('veterinary.showPet', compact('pet'));
+    }
+    /**
+     * Funcion para mostrar el historial clinico de una mascota
+     */
+    public function showPetMedicalRecords(Pet $pet)
+    {
+        $medicalRecords = $pet->medicalRecords; 
+        return view('veterinary.showPetMedicalRecords', compact('pet', 'medicalRecords'));
+    }
+
+    // Mostrar las prescripciones adjuntas al historial clinico de una mascota
+    public function showPetPrescriptions(Pet $pet)
+    {
+        $prescriptions = $pet->prescriptions;
+        return view('veterinary.showPetPrescriptions', compact('pet', 'prescriptions'));
     }
 }

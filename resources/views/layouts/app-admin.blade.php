@@ -62,16 +62,25 @@
         </div>
     </nav>
     
-    <div class="main" >
-    @if(auth()->user()->role == 'Admin')
-        <aside class="sidebar border-end">
-            <ul class="nav flex-column">
-                <li class="nav-item"><a  href="{{ route('veterinary.showVeterinaries') }}">Veterinarios</a></li>
-                <li class="nav-item"><a href="{{ route('veterinary.showAllDates') }}">Citas</a></li>
-                <li class="nav-item"><a  href="{{ route('veterinary.showInvoices') }}">Facturas</a></li>
-            </ul>
-        </aside>
-     @endif 
+    <div class="main">
+        @if(auth()->user()->role == 'Admin')
+            <aside class="sidebar border-end">
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a href="{{ route('veterinary.showVeterinaries') }}">Veterinarios</a></li>
+                    <li class="nav-item"><a href="{{ route('veterinary.showAllDates') }}">Citas</a></li>
+                    <li class="nav-item"><a href="{{ route('veterinary.showInvoices') }}">Facturas</a></li>
+                    <li class="nav-item"><a href="{{ route('veterinary.showPets') }}">Consultar mascotas</a></li>
+                </ul>
+            </aside>
+        @elseif(auth()->user()->role == 'Veterinario')
+            <aside class="sidebar border-end">
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a href="{{ route('veterinary.showDates') }}">Mis citas</a></li>
+                    <li class="nav-item"><a href="{{ route('veterinary.showPets') }}">Consultar mascotas</a></li>
+                </ul>
+            </aside>
+        @endif
+
         <div class="content-wrapper">
             <div class="content-box">
                 @yield('content')

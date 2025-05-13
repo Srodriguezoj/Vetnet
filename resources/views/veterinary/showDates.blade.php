@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container-fluid px-3">
-        <h1 class="mb-4 text-uppercase fw-bold" style="color: #eb6566;"> itas asignadas a {{ Auth::user()->name }} </h1>
+        <h1 class="mb-4 text-uppercase fw-bold" style="color: #eb6566;">Citas asignadas a {{ Auth::user()->name }} </h1>
 
         @if (session('success'))
             <div class="alert alert-success rounded">
@@ -48,7 +48,7 @@
                                             <button type="submit" class="btn btn-danger btn-sm">Cancelar</button>
                                         </form>
                                     @elseif ($appointment->state == 'Confirmada')
-                                        <a href="{{ route('medical-records.create', ['appointment' => $appointment->id]) }}" class="btn btn-info btn-sm">Crear historial</a>
+                                        <a href="{{ route('medical-records.create', ['appointment' => $appointment->id]) }}" class="btn btn-tertiary btn-sm">Crear historial</a>
                                     @endif
                                 </td>
                             </tr>

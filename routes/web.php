@@ -96,6 +96,13 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/invoices', [InvoiceController::class, 'store'])->name('invoices.store');
         Route::resource('invoices', InvoiceController::class)->except(['store']);
         Route::post('/vaccine', [VaccineController::class, 'store'])->name('vaccine.store'); 
+
+        //Mostrar mascotas
+        Route::get('/veterinary/pets', [VeterinaryController::class, 'showAllPets'])->name('veterinary.showPets');
+        Route::get('/veterinary/pet/{pet}', [VeterinaryController::class, 'showPet'])->name('veterinary.showPet');
+        Route::get('/veterinary/pet/{pet}/medicalRecords', [VeterinaryController::class, 'showPetMedicalRecords'])->name('veterinary.showPetMedicalRecords');
+        Route::get('/veterinary/pet/{pet}/prescriptions', [VeterinaryController::class, 'showPetPrescriptions'])->name('veterinary.petPrescriptions');
+        Route::get('/pet/{pet}/medical-record/{medicalRecord}', [MedicalRecordController::class, 'showMedicalRecord'])->name('veterinary.medicalRecords.show');
     });
 
     //Crear veterinarios (Solo para admin)

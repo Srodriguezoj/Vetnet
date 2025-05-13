@@ -95,10 +95,19 @@ class MedicalRecordController extends Controller
     }
 
     /**
-     * Muestra el historal clinico de una mascota
+     * Muestra el historal clinico de una mascota a los clientes
      */
     public function show(MedicalRecord $medicalRecord)
     {
         return view('client.showMedicalRecord', compact('medicalRecord'));
     }
+
+     /**
+     * Muestra el historal clinico de una mascota a los veterinarios
+     */
+   public function showMedicalRecord(Pet $pet, MedicalRecord $medicalRecord)
+    {
+        return view('veterinary.showMedicalRecord', compact('medicalRecord'));
+    }
+
 }
