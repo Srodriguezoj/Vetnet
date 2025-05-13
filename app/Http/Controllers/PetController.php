@@ -113,7 +113,12 @@ class PetController extends Controller
      */
     public function show($id)
     {
-        $pet = Pet::with(['medicalRecords', 'appointments'])->findOrFail($id);
+        $pet = Pet::with([
+            'medicalRecords',
+            'appointments',
+            'vaccinations.vaccine',
+            'vaccinations.medicalRecord.veterinary.user',
+        ])->findOrFail($id);
 
         return view('client.showPet', compact('pet'));
     }

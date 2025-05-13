@@ -31,10 +31,10 @@
 
 <!-- Prescripción -->
 <div class="modal fade" id="prescriptionModal" tabindex="-1" aria-labelledby="prescriptionModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content shadow">
-            <div class="modal-header">
-                <h5 class="modal-title" id="prescriptionModalLabel">Prescripción médica</h5>
+    <div class="modal-dialog modal-xl" style="max-width:700px;">
+        <div class="modal-content shadow-sm rounded" style="margin-top:5% !important">
+            <div class="modal-header" style="background-color:#eb6566; color: white;">
+                <h5 class="text-uppercase" id="prescriptionModalLabel" style="color: #2e2e2e;">Prescripción médica</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
@@ -50,7 +50,7 @@
                         </div>
                     </div>
                 @else
-                  <p class="text-muted text-center">No hay prescripciones adjuntas a este historial.</p>
+                    <p class="text-muted text-center">No hay prescripciones adjuntas a este historial.</p>
                 @endif
             </div>
             <div class="modal-footer justify-content-between">
@@ -64,46 +64,63 @@
 
 <!-- Factura -->
 <div class="modal fade" id="invoiceModal" tabindex="-1" aria-labelledby="invoiceModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content shadow">
-            <div class="modal-header">
-                <h5 class="modal-title" id="invoiceModalLabel">Factura</h5>
+    <div class="modal-dialog modal-xl" style="max-width:800px;">
+        <div class="modal-content shadow-sm rounded" style="margin-top:5% !important">
+            <div class="modal-header" style="background-color:#eb6566; color: white;">
+                @if($medicalRecord->invoice)
+                    <h5 class="text-uppercase" id="invoiceModalLabel" style="color: #2e2e2e;">Factura #{{ $medicalRecord->invoice->id }}</h5>
+                @else
+                    <h5 class="text-uppercase" id="invoiceModalLabel" style="color: #2e2e2e;">Factura no disponible</h5>
+                @endif
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
                 @if($medicalRecord->invoice)
-                    <h5>Factura #{{ $medicalRecord->invoice->id }}</h5>
                     <p><strong>Cliente:</strong> {{ $medicalRecord->invoice->client->name }}</p>
-                    <p><strong>Total:</strong> {{ $medicalRecord->invoice->total }} €</p>
-                    <p><strong>IVA:</strong> {{ $medicalRecord->invoice->tax_percentage }} €</p>
-                    <p><strong>Total con IVA:</strong> {{ $medicalRecord->invoice->total_with_tax }} €</p>
-                    <p><strong>Estado:</strong> {{ $medicalRecord->invoice->status }}</p>
+                    <p><strong>Estado:</strong>
+                        @if($medicalRecord->invoice->status == 'Pagada')
+                            <span class="badge bg-success">{{ $medicalRecord->invoice->status }}</span>
+                        @elseif($medicalRecord->invoice->status == 'Pendiente')
+                            <span class="badge bg-warning text-dark">{{ $medicalRecord->invoice->status }}</span>
+                        @else
+                            <span class="badge bg-danger">{{ $medicalRecord->invoice->status }}</span>
+                        @endif
+                    </p>
                     <h5 class="mt-4">Conceptos:</h5>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Producto/Servicio</th>
-                                <th>Cantidad</th>
-                                <th>Precio Unitario</th>
-                                <th>Subtotal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($medicalRecord->invoice->items as $item)
-                                <tr>
-                                    <td>{{ $item->title }}</td>
-                                    <td>{{ $item->quantity }}</td>
-                                    <td>{{ number_format($item->unit_price, 2) }} €</td>
-                                    <td>{{ number_format($item->subtotal, 2) }} €</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    @if($medicalRecord->invoice->items->isNotEmpty())
+                        <div class="table-responsive">
+                            <table class="table table-bordered align-middle text-center shadow-sm rounded" style="background-color: #fdfafa;">
+                                <thead style="background-color:#f4a48f; color:#2e2e2e" class="text-uppercase">
+                                    <tr>
+                                        <th>Producto/Servicio</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio Unitario</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($medicalRecord->invoice->items as $item)
+                                        <tr>
+                                            <td>{{ $item->title }}</td>
+                                            <td>{{ $item->quantity }}</td>
+                                            <td>{{ number_format($item->unit_price, 2) }} €</td>
+                                            <td>{{ number_format($item->subtotal, 2) }} €</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="text-end fw-bold">Total sin IVA: {{ number_format($medicalRecord->invoice->total, 2) }} €</p>
+                        <p class="text-end fw-bold">IVA ({{ $medicalRecord->invoice->tax_percentage }}%): {{ number_format($medicalRecord->invoice->total * $medicalRecord->invoice->tax_percentage / 100, 2) }} €</p>
+                        <p class="text-end fw-bold fs-5">Total con IVA: {{ number_format($medicalRecord->invoice->total_with_tax, 2) }} €</p>
+                    @else
+                        <p class="text-muted">No existe factura.</p>
+                    @endif
                 @else
-                    <p class="text-muted">No se ha generado factura para este registro médico.</p>
+                    <p class="text-muted">No existe factura.</p>
                 @endif
             </div>
-            <div class="modal-footer justify-content-between">
+           <div class="modal-footer justify-content-between">
                 @if($medicalRecord->invoice)
                     <a href="{{ route('invoice.download', $medicalRecord->invoice->id) }}" class="btn btn-primary">Descargar factura</a>
                 @endif
@@ -111,4 +128,6 @@
         </div>
     </div>
 </div>
+
+
 @endsection

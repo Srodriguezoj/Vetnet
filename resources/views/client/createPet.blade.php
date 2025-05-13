@@ -56,7 +56,7 @@
                 <label for="weight" class="form-label">Peso (kg)</label>
                 <input type="number" class="form-control" id="weight" name="weight" placeholder="Ingrese el peso en kg" step="0.1" required>
             </div>
-            <button type="submit" class="btn btn-success">Registrar</button>
+            <button type="submit" class="btn btn-secondary">Registrar</button>
             </div>
     </form>
 @endsection

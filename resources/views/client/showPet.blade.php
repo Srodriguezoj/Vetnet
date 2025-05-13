@@ -38,10 +38,11 @@
                     <p><b>Sexo:</b> {{ $pet->sex }}</p>
                     <p><b>Fecha de nacimiento:</b> {{ $pet->date_of_birth ? \Carbon\Carbon::parse($pet->date_of_birth)->format('d/m/Y') : 'No disponible' }}</p>
                     <p><b>Edad:</b> {{ $pet->date_of_birth ? \Carbon\Carbon::parse($pet->date_of_birth)->age . ' años' : 'No disponible' }}</p>
-                    <div class="mt-3"><a href="{{ route('pets.editPet', ['pet' => $pet->id]) }}" class="btn btn-primary">Editar mascota</a></div>
+                    <div class="mt-3"><a href="{{ route('pets.editPet', ['pet' => $pet->id]) }}" class="btn btn-primary ">Editar mascota</a></div>
+                    <div class="mt-2"><button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#vaccinesModal">Vacunas</button></div>
                     <div class="mt-2">
                         @if ($pet->medicalRecords->isNotEmpty())
-                        <a href="{{ route('client.showMedicalRecords', $pet->id) }}" class="btn btn-secondary">Consultar historia clínica</a>
+                        <a href="{{ route('client.showMedicalRecords', $pet->id) }}" class="btn btn-tertiary">Consultar historia clínica</a>
                         @else
                             <p>No hay registros médicos para esta mascota.</p>
                         @endif
@@ -98,4 +99,50 @@
         </div>
     </div>
 </div>
+
+<!-- Info vacunas -->
+<div class="modal fade" id="vaccinesModal" tabindex="-1" aria-labelledby="vaccinesModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content shadow-sm rounded">
+      <div class="modal-header" style="background-color:#eb6566; color: white;">
+        <h5 class="text-uppercase" id="vaccinesModalLabel" style="color: #2e2e2e;">Vacunas de {{ $pet->name }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        @if ($pet->vaccinations && $pet->vaccinations->isNotEmpty())
+        <div class="table-responsive">
+          <table class="table table-bordered align-middle text-center shadow-sm rounded" style="background-color: #fdfafa;">
+              <thead style="background-color:#f4a48f; color:#2e2e2e" class="text-uppercase">
+                  <tr>
+                      <th>Tipo de vacuna</th>
+                      <th>Etiqueta</th>
+                      <th>Número de lote</th>
+                      <th>Número de expedición</th>
+                      <th>Fecha de administración</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  @foreach ($pet->vaccinations as $vaccination)
+                  <tr>
+                      <td>{{ $vaccination->vaccine->vaccine_type }}</td>
+                      <td>{{ $vaccination->vaccine->stamp }}</td>
+                      <td>{{ $vaccination->vaccine->batch_num }}</td>
+                      <td>{{ $vaccination->vaccine->expedition_number }}</td>
+                      <td>{{ \Carbon\Carbon::parse($vaccination->date_administered)->format('d/m/Y') }}</td>
+                  </tr>
+                  @endforeach
+              </tbody>
+          </table>
+        </div>
+        @else
+        <p class="text-muted">No se han administrado vacunas a esta mascota.</p>
+        @endif
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection

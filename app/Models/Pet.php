@@ -43,4 +43,9 @@ class Pet extends Model
     {
         return $this->hasMany(MedicalRecord::class, 'id_pet');
     }
+    //RElacion con las vacunas de la mascota
+    public function vaccinations()
+    {
+        return $this->hasMany(PetVaccination::class, 'id_pet');
+    }
 }
