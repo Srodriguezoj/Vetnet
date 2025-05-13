@@ -113,7 +113,7 @@
                             <p class="text-end fw-bold">IVA ({{ $invoice->tax_percentage }}%): {{ number_format($invoice->total * $invoice->tax_percentage / 100, 2) }} €</p>
                             <p class="text-end fw-bold fs-5">Total con IVA: {{ number_format($invoice->total_with_tax, 2) }} €</p>
                         @else
-                            <p class="text-muted">No hay conceptos registrados en esta factura.</p>
+                            <p class="subtitleText">No hay conceptos registrados en esta factura.</p>
                         @endif
                     </div>
                 </div>

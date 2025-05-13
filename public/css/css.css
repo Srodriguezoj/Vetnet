@@ -180,3 +180,13 @@ img{
     max-width: 450pxs;
     margin-top: 20%;
 }
+.subtitleText{
+    --bs-text-opacity: 1;
+    color: #7a7a7a !important;
+}
+.bg-warning, .bg-success, .bg-danger{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    min-width: 100px;
+}

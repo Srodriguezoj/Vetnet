@@ -71,7 +71,7 @@
                     @endif
             </div>
         @else
-        <p class="text-muted mt-2">No hay registros médicos para esta mascota.</p>
+        <p class="subtitleText mt-2">No hay registros médicos para esta mascota.</p>
         @endif 
         </div>
 
@@ -110,7 +110,7 @@
                 </table>
                 </div>
                 @else
-                <p class="text-muted">No se han administrado vacunas a esta mascota.</p>
+                <p class="subtitleText">No se han administrado vacunas a esta mascota.</p>
                 @endif
             </div>
             </div>

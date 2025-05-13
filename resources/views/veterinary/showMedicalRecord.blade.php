@@ -13,7 +13,7 @@
             @else
             <img src="{{ asset('images/huron.jpg') }}" class="img-fluid rounded" style="max-width: 250px;">
             @endif
-            <h4 style="text-aling:center"><small class="text-muted">{{ $medicalRecord->pet->num_microchip }}</small></h4>
+            <h4 style="text-aling:center"><small class="subtitleText">{{ $medicalRecord->pet->num_microchip }}</small></h4>
         </div>
         
         <div class="col-md-8 d-flex">
@@ -51,7 +51,7 @@
                         </div>
                     </div>
                 @else
-                    <p class="text-muted text-center">No hay prescripciones adjuntas a este historial.</p>
+                    <p class="subtitleText text-center">No hay prescripciones adjuntas a este historial.</p>
                 @endif
             </div>
         </div>

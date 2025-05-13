@@ -70,6 +70,7 @@
                     <li class="nav-item"><a href="{{ route('veterinary.showAllDates') }}">Citas</a></li>
                     <li class="nav-item"><a href="{{ route('veterinary.showInvoices') }}">Facturas</a></li>
                     <li class="nav-item"><a href="{{ route('veterinary.showPets') }}">Consultar mascotas</a></li>
+                    <li class="nav-item"><a href="{{ route('veterinary.showMessages') }}">Consultar mensajes</a></li>
                 </ul>
             </aside>
         @elseif(auth()->user()->role == 'Veterinario')

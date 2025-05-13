@@ -16,7 +16,7 @@
             <a class="navbar-brand me-3" href="{{ route('client.dashboard') }}"><img src="{{ asset('images/logoText.png') }}" style="max-width:50px;" alt="VetNet Logo"></a>
             <a href="{{ route('appointments.create') }}" class="btn btn-primary me-2">Pedir cita</a>
             <a href="{{ route('client.dashboard') }}" class="btn btn-secondary me-2">Mis macotas</a>
-            <a href="#" class="btn btn-tertiary me-2">Contacto</a>
+            <a href="{{ route('client.contact') }}" class="btn btn-tertiary me-2">Contacto</a>
         </div>
 
         <div class="dropdown">

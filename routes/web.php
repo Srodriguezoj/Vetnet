@@ -10,6 +10,7 @@ use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\MedicalRecordController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\VaccineController;
+use App\Http\Controllers\MessagesController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -67,6 +68,10 @@ Route::middleware(['auth', 'role:Cliente'])->group(function () {
     //Descara de documentos
     Route::get('/prescription/{id}/download', [PrescriptionController::class, 'download'])->name('prescription.download');
     Route::get('/invoice/{invoice}/download', [InvoiceController::class, 'download'])->name('invoice.download');
+
+    //Ruta para contacto
+    Route::get('/client/contact', [MessagesController::class, 'contactForm'])->name('client.contact');
+    Route::post('/client/contact', [MessagesController::class, 'sendMessage'])->name('client.contact.send');
 });
 
 //Rutas solo accesibles para Admin y Veterinarios
@@ -116,6 +121,10 @@ Route::middleware(['auth'])->group(function () {
        Route::get('/invoices', [VeterinaryController::class, 'showInvoices'])->name('veterinary.showInvoices');
        Route::post('/invoice/{invoice}/changeState', [InvoiceController::class, 'changeState'])->name('invoice.changeState');
        Route::get('/veterinary/dates', [VeterinaryController::class, 'showAllDates'])->name('veterinary.showAllDates');
+
+       //Mensajes de contacto
+       Route::get('/admin/messages', [MessagesController::class, 'showMessages'])->name('veterinary.showMessages');
+       Route::get('/admin/messages/{message}', [MessagesController::class, 'showMessage'])->name('veterinary.showMessage');
     });
 
 });

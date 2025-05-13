@@ -135,7 +135,7 @@
           </table>
         </div>
         @else
-        <p class="text-muted">No se han administrado vacunas a esta mascota.</p>
+        <p class="subtitleText">No se han administrado vacunas a esta mascota.</p>
         @endif
       </div>
     </div>

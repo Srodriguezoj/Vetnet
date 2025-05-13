@@ -14,7 +14,7 @@
                     <img src="{{ asset('images/huron.jpg') }}" alt="Imagen de {{ $pet->name }}" class="img-fluid rounded" style="max-width: 300px;border-radius: 8px;">
                 @endif    
                 <br/><br/>
-                <h4><small class="text-muted">{{ $pet->num_microchip }}</small></h4>        
+                <h4><small class="subtitleText">{{ $pet->num_microchip }}</small></h4>        
             </div>
         </div>
         <div class="col-md-8">
