@@ -11,10 +11,8 @@
             @endforeach
         </ul>
     @endif
-
     <form action="{{ route('medicalRecords.store') }}" method="POST">
         @csrf
-        <!-- IDs ocultos -->
         <input type="hidden" name="id_client" value="{{ $appointment->pet->id_owner }}">
         <input type="hidden" name="id_pet" value="{{ $appointment->pet->id }}">
         <input type="hidden" name="id_veterinary" value="{{ $appointment->id_veterinary }}">
@@ -26,8 +24,7 @@
             <label for="diagnosis" class="form-label">Diagnóstico</label>
             <textarea class="form-control" name="diagnosis" id="diagnosis" rows="4" required></textarea>
         </div>
-
-        <!-- Prescripción -->
+        <!-- Prescripcion -->
         <div class="mb-3">
             <label for="prescription_name" class="form-label">Prescripción seleccionada</label>
             <div class="form-group">
@@ -48,9 +45,7 @@
             </div>
         </div>
         <input type="hidden" name="id_prescription" id="id_prescription">
-        <button type="button" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#prescriptionModal">
-            Añadir prescripción
-        </button>
+        <button type="button" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#prescriptionModal">Añadir prescripción</button>
 
         <!-- Vacuna -->
         <div class="mb-3">
@@ -73,14 +68,11 @@
             </div>
         </div>
         <input type="hidden" name="id_vaccine" id="id_vaccine">
-        <button type="button" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#vaccineModal">
-            Añadir vacuna
-        </button>
+        <button type="button" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#vaccineModal">Añadir vacuna</button>
 
         <!-- Factura -->
         <div class="mb-3">
             <label for="invoice_name" class="form-label">Factura seleccionada</label>
-                
             <div class="mb-3">
                 <div class="form-group">
                     <label for="invoice_num">Número de la factura:</label>
@@ -99,21 +91,17 @@
                     <span id="invoice_total_iva" class="form-control">Total con IVA</span>
                 </div>
             </div>
-
-            <div id="invoiceSaveItems"></div>
-
-            <input type="text" class="form-control" id="invoice_name" readonly>
+            <div type="hidden" id="invoiceSaveItems"></div>
+            <input type="hidden" type="text" class="form-control" id="invoice_name" readonly>
         </div>
         <input type="hidden" name="id_invoice" id="id_invoice">
-        <button type="button" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#invoiceModal">
-            Añadir factura
-        </button>
+        <button type="button" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#invoiceModal">Añadir factura</button>
         <br/>
         <button type="submit" class="btn btn-primary">Guardar historial</button>
     </form>
 </div>
 
-<!-- Modal Prescripción -->
+<!-- Modal Prescripciopn -->
 <div class="modal fade" id="prescriptionModal" tabindex="-1" aria-labelledby="prescriptionModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <form id="prescriptionForm">
@@ -154,7 +142,6 @@
   <div class="modal-dialog">
     <form id="vaccineForm">
         <input type="hidden" name="id_pet" value="{{ $appointment->pet->id }}">
-
         @csrf
         <div class="modal-content">
             <div class="modal-header">
@@ -196,15 +183,13 @@
         <input type="hidden" name="id_appointment" value="{{ $appointment->id }}">
         <input type="hidden" name="date" value="{{ now()->toDateString() }}">
         <input type="hidden" name="status" value="Pendiente">
-
         @csrf
-        <div class="modal-content">
+        <div class="modal-content" style="width:600px !important;">
             <div class="modal-header">
                 <h5 class="modal-title">Nueva factura</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
-                <!-- Conceptos -->
                 <div id="invoiceItemsContainer">
                     <div class="invoice-item row g-2 mb-2">
                         <div class="col-md-4">
@@ -224,27 +209,20 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" id="addItemBtn" class="btn btn-secondary mb-3">Añadir ítem</button>
-
-                <!-- Total -->
+                <button type="button" id="addItemBtn" class="btn btn-secondary mb-3">Añadir concepto</button>
                 <div class="mb-3">
                     <label for="total" class="form-label">Total</label>
                     <input type="number" id="total" name="total" class="form-control" readonly>
                 </div>
-
-                <!-- IVA -->
                 <div class="mb-3">
                     <label for="tax_percentage" class="form-label">IVA (%)</label>
                     <input type="number" id="tax_percentage" name="tax_percentage" class="form-control" step="0.01">
                 </div>
-
-                <!-- Total con IVA -->
                 <div class="mb-3">
                     <label for="total_with_tax" class="form-label">Total con IVA</label>
                     <input type="number" id="total_with_tax" name="total_with_tax" class="form-control" readonly>
                 </div>
-
-            </div>
+                </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Guardar factura</button>
             </div>
@@ -255,7 +233,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-
+        //Guardar datos de prescripcion
         const prescriptionForm = document.getElementById('prescriptionForm');
         prescriptionForm.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -270,6 +248,7 @@
                 body: formData
             })
             .then(res => res.json())
+            //Devolver los datos para mostrarlos
             .then(data => {
                 if (data.id) {
                     document.getElementById('id_prescription').value = data.id;
@@ -287,7 +266,7 @@
             })
             .catch(err => console.error('Error al guardar prescripción', err));
         });
-
+        //Guardar datos de vacuna
         const vaccineForm = document.getElementById('vaccineForm');
         vaccineForm.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -302,6 +281,7 @@
                 body: formData
             })
             .then(res => res.json())
+            //Devolver los datos para mostrarlos
             .then(data => {
                 if (data.id) {
                     document.getElementById('id_vaccine').value = data.id;
@@ -319,6 +299,7 @@
             .catch(err => console.error('Error al guardar la vacuna', err));
         });
 
+        //Guardar datos de factura
         const invoiceForm = document.getElementById('invoiceForm');
         const invoiceItemsContainer = document.getElementById('invoiceItemsContainer');
         const addItemBtn = document.getElementById('addItemBtn');
@@ -326,18 +307,14 @@
         const totalInput = document.getElementById('total');
         const totalWithTaxInput = document.getElementById('total_with_tax');
 
-        // Manejador de envío del formulario
         invoiceForm.addEventListener('submit', function (e) {
             e.preventDefault();
-
-            // Recoger los ítems de la factura
             const items = [];
             document.querySelectorAll('.invoice-item').forEach(item => {
                 const title = item.querySelector('input[name^="items"][name$="[title]"]').value;
                 const quantity = parseFloat(item.querySelector('input[name^="items"][name$="[quantity]"]').value) || 0;
                 const unitPrice = parseFloat(item.querySelector('input[name^="items"][name$="[unit_price]"]').value) || 0;
                 const subtotal = parseFloat(item.querySelector('input[name^="items"][name$="[subtotal]"]').value) || 0;
-
                 items.push({
                     title,
                     quantity,
@@ -345,15 +322,12 @@
                     subtotal
                 });
             });
-
-            // Recoger datos del formulario
             const formData = new FormData(invoiceForm);
             formData.append('items', JSON.stringify(items));
             formData.append('total', totalInput.value);
             formData.append('tax_percentage', taxInput.value);
             formData.append('total_with_tax', totalWithTaxInput.value);
 
-            // Realizar la solicitud
             fetch('{{ route('invoices.store') }}', {
                 method: 'POST',
                 headers: {
@@ -362,6 +336,7 @@
                 },
                 body: formData
             })
+            
             .then(async res => {
                 const contentType = res.headers.get('content-type');
 
@@ -380,21 +355,18 @@
                     throw new Error('Respuesta no válida del servidor');
                 }
             })
+            //Devolver los datos para mostrarlos
             .then(data => {
             if (data.id) {
-                // Asignar valores de la factura
                 document.getElementById('id_invoice').value = data.id;
                 document.getElementById('invoice_num').innerText = data.id;
                 document.getElementById('invoice_total').innerText = data.total;
                 document.getElementById('invoice_iva').innerText = data.tax_percentage;
                 document.getElementById('invoice_total_iva').innerText = data.total_with_tax;
 
-                // Mostrar los ítems de la factura
                 if (data.items && data.items.length > 0) {
                     const invoiceSaveItems = document.getElementById('invoiceSaveItems'); 
-                    invoiceSaveItems.innerHTML = ''; // Limpiar los ítems previos
-
-                    // Recorrer los ítems de la factura
+                    invoiceSaveItems.innerHTML = '';
                     data.items.forEach(item => {
                         const itemElement = document.createElement('div');
                         itemElement.classList.add('invoice-item');
@@ -416,14 +388,11 @@
                                 <span id="invoice_item_subtotal" class="form-control">${item.subtotal}</span>
                             </div>
                         `;
-                        // Añadir el itemElement al contenedor
                         invoiceSaveItems.appendChild(itemElement);
                     });
-                }
-
+                    }
                 const modal = bootstrap.Modal.getInstance(document.getElementById('invoiceModal'));
                 modal.hide();
-
                 invoiceForm.reset();
             } else {
                 alert('Error al guardar factura');
@@ -434,8 +403,6 @@
                 alert(err.message || 'Error inesperado');
             });
         });
-
-        // Agregar ítem a la factura
         addItemBtn.addEventListener('click', () => {
             const index = document.querySelectorAll('.invoice-item').length;
             const newItem = document.createElement('div');
@@ -461,46 +428,40 @@
             calculateInvoiceTotals();
         });
 
-        // Calcular totales al cambiar cantidad o precio
+        // Calcular el total
         invoiceItemsContainer.addEventListener('input', (e) => {
             if (e.target.classList.contains('quantity') || e.target.classList.contains('unit-price')) {
                 calculateInvoiceTotals();
             }
         });
-
-        // Eliminar ítem
+        //Elim concepto
         invoiceItemsContainer.addEventListener('click', (e) => {
             if (e.target.classList.contains('remove-item')) {
                 e.target.closest('.invoice-item').remove();
                 calculateInvoiceTotals();
             }
         });
-
-        // Calcular totales
+        // Totales de los conceptos
         function calculateInvoiceTotals() {
             let total = 0;
             const taxPercentage = parseFloat(taxInput.value) || 0;
-
             document.querySelectorAll('.invoice-item').forEach(item => {
-                const quantityInput = item.querySelector('.quantity');
-                const unitPriceInput = item.querySelector('.unit-price');
-                const subtotalInput = item.querySelector('.subtotal');
-
-                if (quantityInput && unitPriceInput && subtotalInput) {
-                    const quantity = parseFloat(quantityInput.value) || 0;
-                    const unitPrice = parseFloat(unitPriceInput.value) || 0;
-                    const subtotal = quantity * unitPrice;
-                    subtotalInput.value = subtotal.toFixed(2);
-                    total += subtotal;
-                }
+            const quantityInput = item.querySelector('.quantity');
+            const unitPriceInput = item.querySelector('.unit-price');
+            const subtotalInput = item.querySelector('.subtotal');
+            if (quantityInput && unitPriceInput && subtotalInput) {
+                const quantity = parseFloat(quantityInput.value) || 0;
+                const unitPrice = parseFloat(unitPriceInput.value) || 0;
+                const subtotal = quantity * unitPrice;
+                subtotalInput.value = subtotal.toFixed(2);
+                total += subtotal;
+            }
             });
-
             const totalWithTax = total + (total * taxPercentage / 100);
             totalInput.value = total.toFixed(2);
             totalWithTaxInput.value = totalWithTax.toFixed(2);
         }
-
-        // Recalcular totales si se modifica el porcentaje de IVA
+        // Calcular total con IVA
         taxInput.addEventListener('input', calculateInvoiceTotals);
     });
 </script>

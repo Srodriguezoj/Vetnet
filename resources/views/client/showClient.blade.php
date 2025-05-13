@@ -22,9 +22,9 @@
         </div>
     </div>
     <a href="{{ route('client.editClient') }}" class="btn btn-secondary mt-3 ms-2">Editar perfil</a>
-    <a href="#" class="btn btn-tertiary mt-3 ms-2" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Cambiar Contraseña</a>
+<a href="#" class="btn btn-tertiary mt-3 ms-2" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Cambiar Contraseña</a>
 
-<!-- Cambiar la contraseña -->
+<!-- Contraseña -->
 <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

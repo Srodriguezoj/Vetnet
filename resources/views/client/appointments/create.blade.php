@@ -12,7 +12,6 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <form method="POST" action="{{ route('appointments.store') }}">
             @csrf
-
             <div class="form-group">
                 <label for="specialty">Especialidad</label>
                 <select name="specialty" id="specialty" class="form-control">
@@ -22,7 +21,6 @@
                     @endforeach
                 </select>
             </div>
-
             <div class="form-group">
                 <label for="id_pet">Seleccionar Mascota</label>
                 <select name="id_pet" id="id_pet" class="form-control">
@@ -31,29 +29,24 @@
                     @endforeach
                 </select>
             </div>
-
             <div class="form-group">
                 <label for="date">Fecha</label>
                 <input type="date" name="date" id="date" class="form-control" min="{{ \Carbon\Carbon::today()->toDateString() }}">
             </div>
-
             <div class="form-group">
                 <label for="time">Hora</label>
                 <select name="time" id="time" class="form-control time-select"></select>
             </div>
-
             <div class="form-group">
                 <label for="id_veterinary">Veterinario disponible</label>
                 <select name="id_veterinary" id="id_veterinary" class="form-control">
                     <option value="">Selecciona un veterinario</option>
                 </select>
             </div>
-
             <div class="form-group">
                 <label for="title">Título</label>
                 <input type="text" name="title" id="title" class="form-control">
             </div>
-
             <div class="form-group">
                 <label for="description">Descripción</label>
                 <textarea name="description" id="description" class="form-control"></textarea>
@@ -62,8 +55,6 @@
             <button type="submit" class="btn btn-primary">Reservar Cita</button>
         </form>
     </div>
-
-   
 
    <script>
     function updateAvailableTimes() {
@@ -77,7 +68,6 @@
             alert('No se pueden reservar citas en domingo.');
             return;
         }
-
         let availableTimes = [];
         if (dayOfWeek === 6) {
             availableTimes = generateAvailableTimes('10:00', '14:00');
@@ -112,13 +102,13 @@
         const minute = minutes % 60;
         return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
     }
+
     document.getElementById('date').addEventListener('change', updateAvailableTimes);
     window.addEventListener('load', updateAvailableTimes);
     function updateVeterinarians() {
         const specialty = document.getElementById('specialty').value;
         const date = document.getElementById('date').value;
         const time = document.getElementById('time').value;
-
         if (specialty && date && time) {
             if (isNaN(Date.parse(date))) {
                 alert('Fecha no válida.');
@@ -128,7 +118,6 @@
                 alert('Hora no válida.');
                 return;
             }
-
             fetch('{{ route('appointments.checkAvailability') }}', {
                 method: 'POST',
                 headers: {
@@ -140,7 +129,7 @@
             .then(response => response.json())
             .then(data => {
                 const select = document.getElementById('id_veterinary');
-                select.innerHTML = '<option value="">Selecciona un veterinario</option>';
+                select.innerHTML = '<option value="">Selecciona veterinario</option>';
 
                 if (data && Array.isArray(data) && data.length > 0) {
                     data.forEach(vet => {
@@ -150,19 +139,14 @@
                         select.appendChild(option);
                     });
                 } else {
-                    alert('No hay veterinarios disponibles para esa fecha y hora. Por favor, elige otra.');
+                    alert('No hay veterinarios disponibles.');
                 }
             })
             .catch(error => {
-                if (error.response) {
-                    alert('Error del servidor: ' + error.response.status + ' - ' + error.response.statusText);
-                } else {
-                    alert('Hubo un error al obtener los veterinarios. Por favor, intenta nuevamente.');
-                }
+                alert('Error del servidor: ' + error.response.status + ' - ' + error.response.statusText);
             });
-        }
+            }
     }
-
     document.getElementById('specialty').addEventListener('change', updateVeterinarians);
     document.getElementById('date').addEventListener('change', updateVeterinarians);
     document.getElementById('time').addEventListener('change', updateVeterinarians);

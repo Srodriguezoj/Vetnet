@@ -73,7 +73,7 @@ class MedicalRecordController extends Controller
     }
 
         // Redirigir al dashboard o donde sea necesario
-        return redirect()->route('veterinary.dashboard')->with('success', 'Historial médico creado correctamente.');
+        return redirect()->route('veterinary.showDates')->with('success', 'Historial médico creado correctamente.');
     }
 
 

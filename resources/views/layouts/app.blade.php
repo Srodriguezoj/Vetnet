@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ config('app.name', 'VetNet') }}</title>
+    <title>{{ config('app.name', 'Vetnet') }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/css.css') }}">
@@ -14,7 +14,6 @@
     <nav class="navbar navbar-light bg-light shadow-sm justify-content-between px-3">
         <div class="d-flex align-items-center">
             <a class="navbar-brand me-3" href="{{ route('client.dashboard') }}"><img src="{{ asset('images/logoText.png') }}" style="max-width:50px;" alt="VetNet Logo"></a>
-
             <a href="{{ route('appointments.create') }}" class="btn btn-primary me-2">Pedir cita</a>
             <a href="#" class="btn btn-tertiary me-2">Contacto</a>
         </div>

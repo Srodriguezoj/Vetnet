@@ -6,22 +6,19 @@
         <div class="col-md-4 text-center d-flex flex-column justify-content-start">
             <h3 class="mb-4">Historial clínico de {{ $medicalRecord->pet->name }}</h3>
             @if($medicalRecord->pet->species == 'Perro')
-                <img src="{{ asset('images/perro.jpg') }}" class="img-fluid rounded" style="max-width: 250px;">
+            <img src="{{ asset('images/perro.jpg') }}" class="img-fluid rounded" style="max-width: 250px;">
             @elseif($medicalRecord->pet->species == 'Gato')
-                <img src="{{ asset('images/gato.jpg') }}" class="img-fluid rounded" style="max-width: 250px;">
+            <img src="{{ asset('images/gato.jpg') }}" class="img-fluid rounded" style="max-width: 250px;">
             @else
-                <img src="{{ asset('images/huron.jpg') }}" class="img-fluid rounded" style="max-width: 250px;">
+            <img src="{{ asset('images/huron.jpg') }}" class="img-fluid rounded" style="max-width: 250px;">
             @endif
             <h4><small class="text-muted">{{ $medicalRecord->pet->num_microchip }}</small></h4>
         </div>
         <div class="col-md-8 d-flex">
             <div class="card shadow-sm p-4 w-100">
-                <h5>{{ $medicalRecord->created_at->format('d/m/Y') }} - {{ $medicalRecord->appointment->time ?? 'Hora no disponible' }}</h5>
-                <br/>
-                <h4 class="fw-bold" style="color:#7a7a7a">{{ $medicalRecord->diagnosis }}</h4>
-                <br/>
+                <h5>{{ $medicalRecord->created_at->format('d/m/Y') }}-{{ $medicalRecord->appointment->time ?? 'Hora no disponible' }}</h5><br/>
+                <h4 class="fw-bold" style="color:#7a7a7a">{{ $medicalRecord->diagnosis }}</h4><br/>
                 <p>{{ $medicalRecord->description ?? $medicalRecord->diagnosis }}</p>
-
                 <div class="d-flex justify-content-between" style="margin-top:auto;">
                     <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#prescriptionModal">Ver prescripción</a>
                     <a href="#" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#invoiceModal">Ver factura</a>
@@ -53,7 +50,7 @@
                         </div>
                     </div>
                 @else
-                    <p class="text-muted text-center">No hay prescripciones adjuntas a este historial.</p>
+                  <p class="text-muted text-center">No hay prescripciones adjuntas a este historial.</p>
                 @endif
             </div>
             <div class="modal-footer justify-content-between">

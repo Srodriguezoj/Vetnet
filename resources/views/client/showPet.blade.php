@@ -72,22 +72,22 @@
                             </thead>
                             <tbody>
                             @foreach ($pet->appointments as $appointment)
-                                    <tr>
-                                        <td>{{ \Carbon\Carbon::parse($appointment->date)->format('d/m/Y') }}</td>
-                                        <td>{{ $appointment->time }}</td>
-                                        <td>{{ $appointment->title }}</td>
-                                        <td>{{ $appointment->state }}</td>
-                                        <td>
-                                            @if ($appointment->state == 'Pendiente' || $appointment->state == 'Confirmada')
-                                                <form action="{{ route('appointments.destroy', $appointment->id) }}" method="POST" onsubmit="return confirm('¿Quieres cancelar la cita?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">Cancelar</button>
-                                                </form>
-                                            @elseif ($appointment->state == 'Completada')
-                                            @endif
-                                        </td>
-                                    </tr>
+                            <tr>
+                                <td>{{ \Carbon\Carbon::parse($appointment->date)->format('d/m/Y') }}</td>
+                                <td>{{ $appointment->time }}</td>
+                                <td>{{ $appointment->title }}</td>
+                                <td>{{ $appointment->state }}</td>
+                                <td>
+                                    @if ($appointment->state == 'Pendiente' || $appointment->state == 'Confirmada')
+                                        <form action="{{ route('appointments.destroy', $appointment->id) }}" method="POST" onsubmit="return confirm('¿Quieres cancelar la cita?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">Cancelar</button>
+                                        </form>
+                                    @elseif ($appointment->state == 'Completada')
+                                    @endif
+                                </td>
+                            </tr>
                                 @endforeach
                             </tbody>
                         </table>

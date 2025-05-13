@@ -51,8 +51,10 @@ class AuthController extends Controller
 
         if($user->role === User::ROLE_CLIENT){
             return redirect()->route('client.dashboard');
-        }else if($user->role === User::ROLE_ADMIN || $user->role === User::ROLE_VET){
-            return redirect()->route('veterinary.dashboard');
+        }else if($user->role === User::ROLE_VET){
+            return redirect()->route('veterinary.showDates');
+        }else if($user->role === User::ROLE_ADMIN){
+                return redirect()->route('veterinary.dashboard');
         }else{
             return redirect('/');
         }
@@ -80,8 +82,10 @@ class AuthController extends Controller
         //Redirigimos a la pantalla según el tipo de usuario
         if($user->role === User::ROLE_CLIENT){
             return redirect()->route('client.dashboard');
-        }else if($user->role === User::ROLE_ADMIN || $user->role === User::ROLE_VET){
-            return redirect()->route('veterinary.dashboard');
+        }else if($user->role === User::ROLE_VET){
+            return redirect()->route('veterinary.showDates');
+        }else if($user->role === User::ROLE_ADMIN){
+                return redirect()->route('veterinary.dashboard');
         }else{
             return redirect('/');
         }
