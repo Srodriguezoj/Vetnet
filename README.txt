@@ -44,3 +44,6 @@ php artisan serve
 Nos dirigimos dentro del navegador y acedemos a: http://127.0.0.1:8000/
 
 Deberia dirigirnos a la página de login.
+Por defecto al levntar la base de datos la primera vez ya estaria creado el usuario admin con estas credenciales:
+email: admin@vetnet.com
+password: admin1234
