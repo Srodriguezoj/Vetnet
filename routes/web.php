@@ -13,7 +13,7 @@ use App\Http\Controllers\VaccineController;
 use App\Http\Controllers\MessagesController;
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    return view('auth.login');
 });
 
 Route::view('/login', 'auth.login')->name('login');
