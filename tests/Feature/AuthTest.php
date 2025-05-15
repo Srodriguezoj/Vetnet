@@ -12,19 +12,15 @@ class AuthTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * Test crear usuario cliente
-     *
-     * @return void
-     */
+    #[Test]
     public function test_user_registration()
     {
         $this->refreshDatabase(); 
 
         $data = [
             'name' => 'Carlos',
-            'surname' => 'Fez',
-            'email' => 'carlos.feze@example.com',
+            'surname' => 'Arguiñano',
+            'email' => 'carlos@example.com',
             'dni' => '12345678A',
             'phone' => '666666666',
             'address' => 'Calle Marina',
@@ -38,18 +34,14 @@ class AuthTest extends TestCase
         $response = $this->post(route('register.post'), $data);
         $response->assertRedirect(route('client.dashboard'));
         $this->assertDatabaseHas('users', [
-            'email' => 'carlos.feze@example.com',
+            'email' => 'carlos@example.com',
             'role' => 'Cliente',
         ]);
-        $user = User::where('email', 'carlos.feze@example.com')->first();
+        $user = User::where('email', 'carlos@example.com')->first();
         $this->assertTrue(Hash::check('Password123', $user->password));
     }
 
-    /**
-     * Test login cliente
-     *
-     * @return void
-     */
+    #[Test]
     public function test_user_login()
     {
         $user = User::create([
@@ -74,11 +66,7 @@ class AuthTest extends TestCase
         $this->assertAuthenticatedAs($user);
     }
 
-    /**
-     * Test login usuario credenciales incorrectas
-     *
-     * @return void
-     */
+    #[Test]
     public function test_user_login_invalid_credentials()
     {
         $response = $this->post(route('login.post'), [
@@ -90,11 +78,7 @@ class AuthTest extends TestCase
         $this->assertGuest();
     }
 
-    /**
-     * Test logout cliente
-     *
-     * @return void
-     */
+    #[Test]
     public function test_user_logout()
     {
         $user = User::create([

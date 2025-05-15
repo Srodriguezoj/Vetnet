@@ -44,6 +44,13 @@ class VaccineController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'vaccine_type' => 'required|string',
+            'stamp' => 'required|date',
+            'batch_num' => 'required|string',
+            'expedition_number' => 'required|string',
+        ]);
+
        $vacine = Vaccine::create($request->all());
 
         return response()->json(['id' => $vacine->id,'vaccine_type' => $vacine->vaccine_type,'stamp' => $vacine->stamp,'batch_num' => $vacine->batch_num,

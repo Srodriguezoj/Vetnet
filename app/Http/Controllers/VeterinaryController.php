@@ -96,6 +96,11 @@ class VeterinaryController extends Controller
      */
     public function showInvoices()
     {
+        $user = Auth::user();
+        if ($user->role !== 'Admin') {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
+
         $invoices = Invoice::with('veterinary.user')->get();
 
         return view('veterinary.showInvoices', compact('invoices'));
