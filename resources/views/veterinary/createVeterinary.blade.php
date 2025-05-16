@@ -19,7 +19,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Email</label>
-                <input type="email" name="email" class="form-control" required>
+                <input type="email" type="email" name="email" class="form-control" required>
             </div>
             <div class="mb-3">
                 <label class="form-label">Contraseña</label>
@@ -31,7 +31,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Número de colegiado</label>
-                <input type="text" name="collegiate_num" class="form-control" required>
+                <input type="text" name="collegiate_num" maxlength="10" class="form-control" required>
             </div>
             <div class="mb-3">
                 <label class="form-label">Especialidad</label>
