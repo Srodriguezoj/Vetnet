@@ -43,22 +43,23 @@ return [
             ],
 
             'mysql' => [
-                'driver' => 'mysql',
-                'host' => 'xvspce.stackhero-network.com',
-                'port' => 7756,
-                'database' => 'root',
-                'username' => 'root',
-                'password' => 'PRyJiyAqh18H0n5TIFXsJfwi2XGVVmaM',
-                'unix_socket' => env('DB_SOCKET', ''),
-                'charset' => 'utf8mb4',
-                'collation' => 'utf8mb4_unicode_ci',
-                'prefix' => '',
-                'strict' => true,
-                'engine' => null,
-                'options' => extension_loaded('pdo_mysql') ? array_filter([
-                        PDO::MYSQL_ATTR_SSL_CA => env('DB_SSL_CA'), // Ruta al certificado si hace falta
-                    ]) : [],
-                ],
+            'driver' => 'mysql',
+            'host' => env('DB_HOST', 'xvspce.stackhero-network.com'),
+            'port' => env('DB_PORT', '7756'),
+            'database' => env('DB_DATABASE', 'root'),
+            'username' => env('DB_USERNAME', 'root'),
+            'password' => env('DB_PASSWORD'),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => base_path('certs/isrgrootx1.pem'), // ruta al certificado CA
+                PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false, // opcional, si tienes problemas de verificación
+            ]) : [],
+        ],
 
         'mariadb' => [
             'driver' => 'mariadb',
