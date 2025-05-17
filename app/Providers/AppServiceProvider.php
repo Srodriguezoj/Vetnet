@@ -21,9 +21,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if ($sslCert = env('DB_SSL_CA_CONTENT')) {
-            $path = '/tmp/isrgrootx1.pem';
-            file_put_contents($path, $sslCert);
+        $path = base_path('app/certificates/isrgrootx1.pem');
+
+        if (file_exists($path)) {
             putenv("MYSQL_ATTR_SSL_CA=$path");
 
             Config::set('database.connections.mysql.options', [
