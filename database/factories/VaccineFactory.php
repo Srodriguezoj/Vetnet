@@ -20,7 +20,7 @@ class VaccineFactory extends Factory
     {
         return [
             'vaccine_type' => $this->faker->word(),
-            'stamp' => $this->faker->date(),
+            'stamp' => $this->faker->word(),
             'batch_num' => $this->faker->word(),
             'expedition_number'=> $this->faker->date(),
         ];

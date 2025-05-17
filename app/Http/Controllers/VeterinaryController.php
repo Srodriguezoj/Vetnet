@@ -31,11 +31,18 @@ class VeterinaryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
-            'collegiate_num' => 'required|string|unique:veterinaries,collegiate_num',
+            'name' => 'required|string|max:100|regex:/^[\pL\s\-]+$/u',
+            'surname' => 'required|string|max:250|regex:/^[\pL\s\-]+$/u',
+            'email' => ['required','string', 'email','max:200','unique:users','regex:/^[^@\s]+@[^@\s]+\.(com|es|org|net|edu|gov|info)$/i',],
+            'dni' => ['required','string','size:9','unique:users','regex:/^[0-9]{8}[A-Za-z]$/',],
+            'password' => ['required','string','min:8','max:200','confirmed','regex:/[a-z]/','regex:/[A-Z]/','regex:/[0-9]/',],
+            'collegiate_num' => 'required|string|max:10|unique:veterinaries,collegiate_num',
             'specialty' => 'required|string',
+        ], [
+            'dni.regex' => 'El DNI debe tener 8 números y una letra.',
+            'email.regex' => 'El correo debe tener un formato válido.',
+            'password.regex' => 'La contraseña debe contener al menos una mayúscula, una minúscula y un número.',
+            'password.confirmed' => 'La confirmación de la contraseña no coincide.',
         ]);
         $user = User::create([
             'name' => $request->name,

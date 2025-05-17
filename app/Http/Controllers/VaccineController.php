@@ -46,7 +46,7 @@ class VaccineController extends Controller
     {
         $request->validate([
             'vaccine_type' => 'required|string',
-            'stamp' => 'required|date',
+            'stamp' => 'required|string',
             'batch_num' => 'required|string',
             'expedition_number' => 'required|string',
         ]);

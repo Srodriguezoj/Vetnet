@@ -19,7 +19,7 @@ class VaccineTest extends TestCase
         $this->actingAs($user);
         $data = [
             'vaccine_type' => 'vacuna rabia',
-            'stamp' => '2025-01-01',
+            'stamp' => '04-09-2022',
             'batch_num' => '1234',
             'expedition_number' => '12345',
         ];

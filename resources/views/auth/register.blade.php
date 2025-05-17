@@ -7,6 +7,9 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+
+        <script src="{{ asset('js/client-form-validation.js') }}"></script>
+        
         <style>
             body {
                 font-family: 'Montserrat', sans-serif;
@@ -79,14 +82,14 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label for="name" class="form-label">{{ __('Nombre') }}</label>
-                                <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" required>
+                                <input type="text" id="name" name="name" class="form-control" required>
                                 @error('name')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col">
                                 <label for="surname" class="form-label">{{ __('Apellidos') }}</label>
-                                <input type="text" id="surname" name="surname" class="form-control @error('surname') is-invalid @enderror" value="{{ old('surname') }}" required>
+                                <input type="text" id="surname" name="surname" class="form-control" required>
                                 @error('surname')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -95,25 +98,25 @@
 
                         <div class="row mb-3">
                             <div class="col">
-                                <label for="email" class="form-label">{{ __('Email') }}</label>
-                                <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required>
-                                @error('email')
+                                <label for="dni" class="form-label">{{ __('DNI') }}</label>
+                                <input type="text" id="dni" name="dni" class="form-control" maxlength="9" required>
+                                @error('dni')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col">
-                                <label for="dni" class="form-label">{{ __('DNI') }}</label>
-                                <input type="text" id="dni" name="dni" class="form-control @error('dni') is-invalid @enderror" value="{{ old('dni') }}" required>
-                                @error('dni')
+                                <label for="phone" class="form-label">{{ __('Teléfono') }}</label>
+                                <input type="text" id="phone" name="phone" maxlength="9" class="form-control" >
+                                @error('phone')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="phone" class="form-label">{{ __('Teléfono') }}</label>
-                            <input type="text" id="phone" name="phone" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}">
-                            @error('phone')
+                            <label for="email" class="form-label">{{ __('Email') }}</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                            @error('email')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -121,14 +124,14 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label for="address" class="form-label">{{ __('Dirección') }}</label>
-                                <input type="text" id="address" name="address" class="form-control @error('address') is-invalid @enderror" value="{{ old('address') }}">
+                                <input type="text" id="address" name="address" class="form-control">
                                 @error('address')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col">
                                 <label for="city" class="form-label">{{ __('Ciudad') }}</label>
-                                <input type="text" id="city" name="city" class="form-control @error('city') is-invalid @enderror" value="{{ old('city') }}">
+                                <input type="text" id="city" name="city" class="form-control" >
                                 @error('city')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -138,14 +141,14 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label for="country" class="form-label">{{ __('País') }}</label>
-                                <input type="text" id="country" name="country" class="form-control @error('country') is-invalid @enderror" value="{{ old('country') }}">
+                                <input type="text" id="country" name="country" class="form-control">
                                 @error('country')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col">
                                 <label for="postcode" class="form-label">{{ __('Código Postal') }}</label>
-                                <input type="text" id="postcode" name="postcode" class="form-control @error('postcode') is-invalid @enderror" value="{{ old('postcode') }}">
+                                <input type="text" id="postcode" name="postcode" maxlength="5" class="form-control">
                                 @error('postcode')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -154,7 +157,7 @@
 
                         <div class="mb-3">
                             <label for="password" class="form-label">{{ __('Contraseña') }}</label>
-                            <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" required>
+                            <input type="password" id="password" name="password" class="form-control" required>
                             @error('password')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

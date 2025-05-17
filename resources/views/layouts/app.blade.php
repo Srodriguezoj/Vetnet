@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/css.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <script src="{{ asset('js/client-form-validation.js') }}"></script>
 </head>
 <body>
     <!-- Menú superior -->

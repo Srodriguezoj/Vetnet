@@ -10,8 +10,9 @@
     <link rel="stylesheet" href="{{ asset('css/css.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <script src="{{ asset('js/veterinary-form-validation.js') }}"></script>
+
     <style>
-       
         .main {
             flex: 1;
             display: flex;
