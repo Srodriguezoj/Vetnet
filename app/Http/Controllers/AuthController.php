@@ -48,15 +48,7 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
         session(['token' => $token]);
 
-        if($user->role === User::ROLE_CLIENT){
-            return redirect()->route('client.dashboard');
-        }else if($user->role === User::ROLE_VET){
-            return redirect()->route('veterinary.showDates');
-        }else if($user->role === User::ROLE_ADMIN){
-                return redirect()->route('veterinary.dashboard');
-        }else{
-            return redirect('/');
-        }
+        return redirect()->route('client.dashboard');
     }
 
     /**

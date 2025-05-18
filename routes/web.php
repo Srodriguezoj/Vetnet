@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\UserController;
@@ -32,7 +33,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 //Rutas solo accesibles para clientes
-Route::middleware(['auth', 'role:Cliente'])->group(function () {
+Route::middleware(['auth', 'role:' . User::ROLE_CLIENT])->group(function () {
 
     // Dashboard cliente
     Route::get('/dashboard/client', [UserController::class, 'showPets'])->name('client.dashboard');
@@ -80,10 +81,10 @@ Route::middleware(['auth'])->group(function () {
     // Dashboard
     Route::get('/dashboard/veterinary', function () {
         return view('veterinary.dashboard');
-    })->middleware('role:Admin,Veterinario')->name('veterinary.dashboard');
+    })->middleware('role:' . User::ROLE_ADMIN . ',' . User::ROLE_VET)->name('veterinary.dashboard');
     
     // Perfil vet-admin
-   Route::middleware(['auth', 'role:Admin,Veterinario'])->group(function () {
+   Route::middleware(['auth', 'role:' . User::ROLE_ADMIN . ',' . User::ROLE_VET])->group(function () {
         Route::get('/showProfile', [UserController::class, 'show'])->name('veterinary.showProfile');
         Route::get('/editProfile', [UserController::class, 'edit'])->name('veterinary.editProfile');
         Route::put('/showProfile', [UserController::class, 'update'])->name('veterinary.updateProfile');
@@ -111,7 +112,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     //Crear veterinarios (Solo para admin)
-    Route::middleware(['auth', 'role:Admin'])->group(function () {
+    Route::middleware(['auth', 'role:' . User::ROLE_ADMIN])->group(function () {
         Route::get('/veterinary/create', [VeterinaryController::class, 'create'])->name('veterinary.create');
         Route::post('/veterinary', [VeterinaryController::class, 'store'])->name('veterinary.store');
         Route::get('/veterinary', [VeterinaryController::class, 'index'])->name('veterinary.showVeterinaries');
