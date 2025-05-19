@@ -2,6 +2,21 @@
 
 return [
 
+    'maintenance' => [
+        'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
+        'store' => env('APP_MAINTENANCE_STORE', 'database'),
+    ],
+
+    'providers' => [
+        Barryvdh\DomPDF\ServiceProvider::class,
+        Illuminate\Filesystem\FilesystemServiceProvider::class,
+    ],
+
+    'aliases' => [
+        'Pdf' => Barryvdh\DomPDF\Facade::class,
+        'File' => Illuminate\Support\Facades\File::class,
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
